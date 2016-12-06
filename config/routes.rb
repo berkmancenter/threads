@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
-  devise_for :users
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root to: 'home#index'
+  devise_for :users, skip: %i(sessions)
+
+  devise_scope :user do
+    get    'login'  => 'devise/sessions#new'
+    post   'login'  => 'devise/sessions#create'
+    delete 'logout' => 'devise/sessions#destroy'
+  end
+
+  resources :rooms
+
+  root to: 'rooms#index'
 end
