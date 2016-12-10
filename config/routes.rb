@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     get    'login'  => 'devise/sessions#new'
-    post   'login'  => 'devise/sessions#create'
+    post   'login'  => 'devise/sessions#create', as: :session
     delete 'logout' => 'devise/sessions#destroy'
   end
 
