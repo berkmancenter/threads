@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 class RoomsController < ApplicationController
   def index
-    @rooms = Room.all
+    if user_signed_in?
+      @rooms = Room.all
+    else
+      redirect_to login_path
+    end
   end
 
   def show
