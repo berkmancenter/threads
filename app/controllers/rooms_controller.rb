@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 class RoomsController < ApplicationController
   def index
-    if user_signed_in?
-      @rooms = Room.all
-    else
-      redirect_to login_path
-    end
+    @rooms = Room.all
   end
 
   def show
@@ -19,7 +15,6 @@ class RoomsController < ApplicationController
   def create
     @room = Room.new(room_params)
     if @room.save
-    else
     end
   end
 
@@ -30,7 +25,6 @@ class RoomsController < ApplicationController
   def update
     @room = Room.find(params[:id])
     if @room.update_attributes(room_params)
-    else
     end
   end
 

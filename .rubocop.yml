@@ -1,0 +1,74 @@
+AllCops:
+  Exclude:
+    - 'db/schema.rb'
+    - 'db/migrate/*'
+    - 'vendor/**/*'
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  ExtraDetails: true
+  TargetRubyVersion: 2.3
+
+Rails:
+  Enabled: true
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Max: 20
+  Exclude:
+    - 'db/**/*.rb'
+
+Metrics/CyclomaticComplexity:
+  Max: 7
+
+Metrics/PerceivedComplexity:
+  Max: 8
+
+Metrics/AbcSize:
+  Exclude:
+    - 'db/**/*.rb'
+  Max: 25
+
+Style/AsciiComments:
+  Enabled: false
+
+Style/BlockComments:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/EmptyElse:
+  EnforcedStyle: empty
+
+Style/ExtraSpacing:
+  Exclude:
+    - 'db/migrate/*.rb'
+
+Style/Lambda:
+  EnforcedStyle: literal
+
+Style/NumericLiterals:
+  Enabled: false
+
+Style/BracesAroundHashParameters:
+  EnforcedStyle: no_braces
+  Exclude:
+    - 'db/fixtures/*.rb'
+
+Style/DoubleNegation:
+  Enabled: false
+
+Style/TrailingCommaInLiteral:
+  Enabled: false
+
+Style/ExtraSpacing:
+  Exclude:
+    - 'spec/**/*.rb'
+Style/SpaceInsideBrackets:
+  Exclude:
+    - 'spec/**/*.rb'

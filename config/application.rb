@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require_relative 'boot'
 
 require 'rails/all'
@@ -11,5 +12,13 @@ module ChatApp
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+    config.time_zone = 'Hanoi'
+    config.active_record.default_timezone = :utc
+
+    config.autoload_paths += %W(#{config.root}/lib)
+
+		config.generators do |g|
+			g.test_framework :rspec, fixture: true
+		end
   end
 end
