@@ -1,0 +1,13 @@
+.navbar {
+  padding: 10px 0;
+  > .container .navbar-brand {
+    margin-left: 0;
+  }
+}
+
+.navbar-brand {
+  padding: 0;
+  img {
+    height: 50px;
+  }
+}

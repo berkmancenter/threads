@@ -1,4 +1,22 @@
-@import "bootstrap-sprockets";
-@import "bootstrap";
-@import "login";
-@import "rooms";
+@charset "UTF-8";
+
+@import "base/base";
+
+@import "layout/header";
+@import "layout/footer";
+
+.login {
+  width: 400px;
+}
+
+.login-form {
+  padding: 20px;
+  margin: 0 auto;
+}
+
+.login-options {
+  margin-top: 10px;
+  a {
+    display: block;
+  }
+}
