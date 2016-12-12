@@ -25,10 +25,10 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
-  belongs_to :avatar, class_name: Image, foreign_key: :avatar_id
+  belongs_to :avatar, class_name: Image, foreign_key: :avatar_id, optional: true
   has_many :messages
   has_many :rooms, through: :messages
 
-  validates :username, presence: true, uniqueness: true
+  validates :username, presence: true, uniqueness: true, length: { minimum: 3, maximum: 64 }
   validates :email, presence: true, uniqueness: true
 end
