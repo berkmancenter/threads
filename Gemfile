@@ -15,7 +15,6 @@ gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
 
 gem 'devise'
-gem 'pundit'
 gem 'redis', '~> 3.0'
 gem 'bcrypt', '~> 3.1.7'
 gem 'enumerize'
