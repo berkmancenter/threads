@@ -9,14 +9,10 @@
   </head>
 
   <body>
-    <% if user_signed_in? %>
-      <%= render 'shared/header' %>
-    <% end %>
+    <%= render 'shared/header' %>
 
     <%= yield %>
 
-    <% if user_signed_in? %>
-      <%= render 'shared/footer' %>
-    <% end %>
+    <%= render 'shared/footer' %>
   </body>
 </html>
