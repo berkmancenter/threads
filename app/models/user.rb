@@ -21,14 +21,15 @@
 #
 
 class User < ApplicationRecord
+  VALID_EMAIL_REGEX = /\A([^@\s]{1,64})@((?:[-\p{L}\d]+\.)+\p{L}{2,})\z/i
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
-  belongs_to :avatar, class_name: Image, foreign_key: :avatar_id, optional: true
   has_many :messages
   has_many :rooms, through: :messages
 
   validates :username, presence: true, uniqueness: true, length: { minimum: 3, maximum: 64 }
-  validates :email, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true, format: { with: VALID_EMAIL_REGEX }
 end

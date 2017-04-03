@@ -1,0 +1,27 @@
+<section class="room-chat">
+<div class="container">
+
+<div class="room-info">
+  <h2><%= @room.title %></h2>
+</div>
+
+<div class ="message-area">
+  <% @messages.each do |message| %>
+    <%= render 'rooms/message', message: message %>
+  <% end %>
+</div>
+
+<div class="message-form">
+  <%= form_for @message, url: messages_path, remote: true, authencity_token: true do |f| %>
+    <%= f.hidden_field :room_id %>
+    <div class="form-group">
+      <%= f.text_area :content, class: 'form-control' %>
+    </div>
+    <div class="text-right">
+      <%= f.submit 'Post', class: 'btn btn-default' %>
+    </div>
+  <% end %>
+</div>
+
+</div>
+</section>

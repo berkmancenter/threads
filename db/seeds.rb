@@ -6,3 +6,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+minh = User.create(username: 'Minh Phan', email: 'minh@xample.com', password: 'password', password_confirmation: 'password')
+
+10.times.each do |i|
+  r = Room.create(owner_id: minh.id, title: Faker::Name.name)
+  10.times.each { |m| Message.create(content: "message content #{m}", room_id: r.id, user_id: minh.id) }
+end
