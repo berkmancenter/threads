@@ -1,0 +1,38 @@
+# frozen_string_literal: true
+# == Schema Information
+#
+# Table name: room_users
+#
+#  id                   :integer          not null, primary key
+#  user_id              :integer          not null
+#  room_id              :integer          not null
+#  last_read_message_id :integer
+#  unread_message_count :integer          default(0)
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#
+
+class RoomUser < ApplicationRecord
+  belongs_to :user
+  belongs_to :room
+  belongs_to :last_read_message, class_name: Message, foreign_key: :last_read_message_id, optional: true
+
+  scope :room_user, ->(room_id, user_id) { find_by(room_id: room_id, user_id: user_id) }
+
+  def self.create_or_update(room_id, user_id, last_read_message_id)
+    item = room_user(room_id, user_id)
+    if item.present?
+      item.update_attributes(last_read_message_id: last_read_message_id, unread_message_count: 0)
+    else
+      create(room_id: room_id, user_id: user_id, last_read_message_id: last_read_message_id)
+    end
+  end
+
+  def self.update_unread_messages_count(room_id, user_id)
+    item = room_user(room_id, user_id)
+    binding.pry
+    num = item.unread_message_count + 1
+    item.update_attributes(unread_message_count: num) if item.present?
+    num
+  end
+end

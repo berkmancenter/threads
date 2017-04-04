@@ -16,4 +16,6 @@ class Message < ApplicationRecord
   belongs_to :room
 
   validates :content, presence: true, length: { maximum: 4000 }
+
+  scope :ordered, -> { order(id: :asc) }
 end

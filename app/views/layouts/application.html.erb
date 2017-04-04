@@ -2,9 +2,10 @@
 <html>
   <head>
     <title>ChatApp</title>
-    <%= csrf_meta_tags %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+    <%= csrf_meta_tags %>
+    <%= action_cable_meta_tag %>
   </head>
 
   <body>

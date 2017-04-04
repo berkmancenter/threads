@@ -10,11 +10,13 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     resource :registrations, only: %i(new create), path: '', path_names: { 'new': 'signup' },
-              controller: 'users/registrations', as: :user_registration
+                             controller: 'users/registrations', as: :user_registration
   end
 
   resources :rooms
   resources :messages, only: %i(create destroy)
 
   root to: 'rooms#index'
+
+  mount ActionCable.server => '/cable'
 end
