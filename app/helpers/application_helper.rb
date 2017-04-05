@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 module ApplicationHelper
   def room_unread_messages(room)
-    item = RoomUser.room_user(room.id, current_user.id)
-    item.present? ? item.unread_message_count : ''
+    num = RoomUser.unread_message_count(room.id, current_user.id)
+    num.positive? ? num : ''
   end
 end
