@@ -1,6 +1,7 @@
 (function () {
   var roomId = $('#room-id').val();
-  App.messages = App.cable.subscriptions.create({channel: 'MessagesChannel', room_id: roomId}, {
+  if (!roomId) return;
+  App.room = App.cable.subscriptions.create({channel: 'RoomChannel', room_id: roomId}, {
     received: function (data) {
       $('.message-area').append(this.renderMessage(data));
     },
