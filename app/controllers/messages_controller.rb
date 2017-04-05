@@ -3,12 +3,13 @@ class MessagesController < ApplicationController
   def create
     message = current_user.messages.build(message_params)
     if message.save
-      num = RoomUser.update_unread_messages_count(params[:room_id], current_user.id)
-      ActionCable.server.broadcast("messages_#{params[:room_id]}", message: message.content, user: current_user.username)
-      ActionCable.server.broadcast("unread_messages_#{params[:room_id]}", count_unread_messages: num)
+      room_id = message_params[:room_id]
+      RoomUser.update_last_read_message!(room_id, current_user.id, message.id)
+      ActionCable.server.broadcast("room_#{room_id}", message: message.content, user: current_user.username)
+      ActionCable.server.broadcast('unread_message', room_id: room_id)
       head :ok
     else
-      redirect_to room_path(params[:room_id])
+      render json: message.errors.messages, status: :unprocessable_enity
     end
   end
 

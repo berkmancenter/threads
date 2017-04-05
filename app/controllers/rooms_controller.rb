@@ -8,7 +8,7 @@ class RoomsController < ApplicationController
     @room = Room.find(params[:id])
     @message = Message.new(room_id: @room.id)
     @messages = @room.messages.last(20)
-    RoomUser.create_or_update(@room.id, current_user.id, @messages.last.id)
+    RoomUser.create_or_update!(@room.id, current_user.id, @messages.last.id)
   end
 
   def new
