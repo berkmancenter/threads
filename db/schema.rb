@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170404080752) do
+ActiveRecord::Schema.define(version: 20170409161425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,12 +26,12 @@ ActiveRecord::Schema.define(version: 20170404080752) do
   end
 
   create_table "room_users", force: :cascade do |t|
-    t.integer  "user_id",                          null: false
-    t.integer  "room_id",                          null: false
+    t.integer  "user_id",              null: false
+    t.integer  "room_id",              null: false
     t.integer  "last_read_message_id"
-    t.integer  "unread_message_count", default: 0
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.index ["last_read_message_id"], name: "index_room_users_on_last_read_message_id", using: :btree
     t.index ["room_id"], name: "index_room_users_on_room_id", using: :btree
     t.index ["user_id", "room_id"], name: "index_room_users_on_user_id_and_room_id", unique: true, using: :btree
     t.index ["user_id"], name: "index_room_users_on_user_id", using: :btree
