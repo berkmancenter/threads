@@ -84,4 +84,6 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.action_cable.url = 'ws://rails-example-chat-app.herokuapp.com:3000/cable'
 end
