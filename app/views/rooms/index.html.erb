@@ -1,11 +1,13 @@
 <section class="room">
   <div class="container">
-    <div class="room-control">
-      <button class="btn btn-primary">Add Room</button>
-    </div>
+    <h2 class="text-center">Rooms</h2>
 
     <div class="list-group">
       <%= render @rooms %>
+    </div>
+
+    <div class="room-control">
+      <%= link_to 'Add Room', new_room_path, class: 'btn btn-success' %>
     </div>
   </div>
 </section>

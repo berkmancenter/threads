@@ -12,8 +12,7 @@
 </div>
 
 <div class="message-form">
-  <%= form_for @message, url: messages_path, remote: true, authencity_token: true do |f| %>
-    <%= f.hidden_field :room_id %>
+  <%= form_for @message, url: room_messages_path(@room), remote: true, authencity_token: true do |f| %>
     <div class="form-group">
       <%= f.text_area :content, class: 'form-control', placeholder: 'Message...' %>
     </div>
@@ -21,6 +20,6 @@
 </div>
 
 </div>
-<%= hidden_field_tag :messages_size, @messages.size, id: 'messages-size' %>
 <%= hidden_field_tag :room_id, @room.id, id: 'room-id' %>
+<%= hidden_field_tag :first_message_id, @messages&.first&.id, id: 'first-message-id' %>
 </section>
