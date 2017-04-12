@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 class MessagesController < ApplicationController
   def create
-    message = current_user.messages.build(message_params)
+    message = current_user.messages.build(message_params.merge(room_id: params[:room_id]))
     if message.save
-      room_id = message_params[:room_id]
+      room_id = params[:room_id]
       RoomUser.update_last_read_message!(room_id, current_user.id, message.id)
-      ActionCable.server.broadcast("room_#{room_id}", message: message.content, user: current_user.username)
+      ActionCable.server.broadcast("room_#{room_id}", content: message.content, username: current_user.username)
       ActionCable.server.broadcast('unread_message', room_id: room_id)
       head :ok
     else
@@ -16,9 +16,15 @@ class MessagesController < ApplicationController
   def destroy
   end
 
+  def old
+    room = Room.find(params[:room_id])
+    messages = room.messages.where('id < ?', params[:first_message_id]).limit(40).order(id: :desc)
+    render json: messages, each_serializer: MessageSerializer, status: :ok
+  end
+
   private
 
   def message_params
-    params.require(:message).permit(:content, :room_id)
+    params.require(:message).permit(:content)
   end
 end

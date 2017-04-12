@@ -6,9 +6,9 @@ class RoomsController < ApplicationController
 
   def show
     @room = Room.find(params[:id])
-    @message = Message.new(room_id: @room.id)
+    @message = Message.new
     @messages = @room.messages.last(40)
-    RoomUser.create_or_update!(@room.id, current_user.id, @messages.last.id)
+    RoomUser.create_or_update!(@room.id, current_user.id, @messages&.last&.id)
   end
 
   def new
@@ -16,8 +16,9 @@ class RoomsController < ApplicationController
   end
 
   def create
-    @room = Room.new(room_params)
+    @room = Room.new(room_params.merge(owner_id: current_user.id))
     if @room.save
+      RoomUser.create_or_update!(@room.id, current_user.id, nil)
       redirect_to rooms_url, notice: 'Room is created successfully'
     else
       render :new
