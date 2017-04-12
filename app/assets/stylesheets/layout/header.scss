@@ -9,5 +9,12 @@
   padding: 0;
   img {
     height: 50px;
+    display: inline-block;
+  }
+  .brand-text {
+    color: #333;
+    font-weight: 600;
+    font-size: 24px;
+    margin-left: 5px;
   }
 }
