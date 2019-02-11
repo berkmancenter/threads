@@ -1,10 +1,14 @@
-development:
-  adapter: async
-  url: redis://localhost:6379/1
+---
+
+development: &default
+  adapter: redis
+  url: <%= ENV['ACTION_CABLE_BACKEND_URL'] %>
 
 test:
-  adapter: async
+  <<: *default
+
+staging:
+  <<: *default
 
 production:
-  adapter: redis
-  url: <%= ENV['REDIS_URL'] %>
+<<: *default
