@@ -7,7 +7,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module ChatApp
+module Threads
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -25,6 +25,11 @@ module ChatApp
                                routing_specs: false,
                                intergration_pool: false,
                                fixture: true
+
+      logger           = ActiveSupport::Logger.new(STDOUT)
+      logger.formatter = config.log_formatter
+      config.log_tags  = [:subdomain, :uuid]
+      config.logger    = ActiveSupport::TaggedLogging.new(logger)
     end
   end
 end

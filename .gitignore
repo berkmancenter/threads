@@ -16,8 +16,12 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+*.swp
 
 # Ignore Byebug command history file.
 .byebug_history
 
 coverage
+
+/config/database.yml
+/config/puma.rb
