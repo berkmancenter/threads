@@ -1,13 +1,16 @@
 <section class="room">
   <div class="container">
-    <h2 class="text-center">Rooms</h2>
+    <div class="row">
+      <div class="col-sm-6">
+        <%= render 'rooms/rooms', rooms: @rooms %>
+      </div>
+      <div class="col-sm-6">
+        <div class="text-center section-header">
+          <%= image_tag("juryx-activethread.png") %>
+        </div>
 
-    <div class="list-group">
-      <%= render @rooms %>
-    </div>
-
-    <div class="room-control">
-      <%= link_to 'Add Room', new_room_path, class: 'btn btn-success' %>
+         Select a thread on the left to view the conversation.
+      </div>
     </div>
   </div>
 </section>

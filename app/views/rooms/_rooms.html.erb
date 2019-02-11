@@ -1,0 +1,11 @@
+<div class="text-center section-header">
+  <%= image_tag("juryx-allthreads.png") %>
+</div>
+
+<div class="list-group">
+  <%= render @rooms %>
+</div>
+
+<div class="room-control">
+  <%= link_to 'Submit New Thread', new_room_path, class: 'btn btn-success' %>
+</div>

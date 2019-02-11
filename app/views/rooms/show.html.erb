@@ -1,25 +1,31 @@
 <section class="room-chat">
-<div class="container">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <%= render 'rooms/rooms', rooms: @rooms %>
+      </div>
+      <div class="col-sm-6">
+        <div class="text-center section-header">
+          <%= image_tag("juryx-activethread.png") %>
+        </div>
 
-<div class="room-info">
-  <h2><%= @room.title %></h2>
-</div>
+        <div class="message-area">
+          <% @messages.each do |message| %>
+            <%= render 'rooms/message', message: message %>
+          <% end %>
+        </div>
 
-<div class="message-area">
-  <% @messages.each do |message| %>
-    <%= render 'rooms/message', message: message %>
-  <% end %>
-</div>
-
-<div class="message-form">
-  <%= form_for @message, url: room_messages_path(@room), remote: true, authencity_token: true do |f| %>
-    <div class="form-group">
-      <%= f.text_area :content, class: 'form-control', placeholder: 'Message...' %>
+        <div class="message-form">
+          <%= form_for @message, url: room_messages_path(@room), remote: true, authencity_token: true do |f| %>
+            <div class="form-group">
+              <%= f.text_area :content, class: 'form-control', placeholder: 'Message...' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
     </div>
-  <% end %>
-</div>
+  </div>
 
-</div>
-<%= hidden_field_tag :room_id, @room.id, id: 'room-id' %>
-<%= hidden_field_tag :first_message_id, @messages&.first&.id, id: 'first-message-id' %>
+  <%= hidden_field_tag :room_id, @room.id, id: 'room-id' %>
+  <%= hidden_field_tag :first_message_id, @messages&.first&.id, id: 'first-message-id' %>
 </section>
