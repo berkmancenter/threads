@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 class RoomsController < ApplicationController
-  def index
-    @rooms = Room.all
-  end
+  before_action :load_rooms, only: %i[index show]
+
+  def index; end
 
   def show
-    @rooms = Room.all
     @room = Room.find(params[:id])
     @message = Message.new
     @messages = @room.messages.last(40)
@@ -49,5 +48,9 @@ class RoomsController < ApplicationController
 
   def room_params
     params.require(:room).permit(:title)
+  end
+
+  def load_rooms
+    @rooms = Room.sorted_by_last_message
   end
 end

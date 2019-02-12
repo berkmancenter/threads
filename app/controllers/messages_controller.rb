@@ -7,15 +7,17 @@ class MessagesController < ApplicationController
     if message.save
       RoomUser.update_last_read_message!(room_id, current_or_guest_user.id, message.id)
       ActionCable.server.broadcast("room_#{room_id}", content: message.content, username: current_or_guest_user.nickname_in_room(room))
-      ActionCable.server.broadcast('unread_message', room_id: room_id)
+      ActionCable.server.broadcast(
+        'unread_message',
+        room_id: room_id
+      )
       head :ok
     else
       render json: message.errors.messages, status: :unprocessable_enity
     end
   end
 
-  def destroy
-  end
+  def destroy; end
 
   def old
     room = Room.find(params[:room_id])

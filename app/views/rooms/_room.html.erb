@@ -1,9 +1,16 @@
 <%= link_to room_path(room), class: 'list-group-item' do %>
 <div class="media room-item" data-room-id="<%= room.id %>">
-<div class="media-left">
-</div>
-<div class="media-body">
-<h4 class="media-heading"><%= room.title %> <span class="badge"><%= room_unread_messages(room) %></span></h4>
-</div>
+  <div class="media-left">
+  </div>
+  <div class="media-body">
+    <h4 class="media-heading"><%= room.title %></h4>
+    <span class="room-item-replies"><%= room.messages.count %> <%= 'reply'.pluralize(room.messages.count) %></span>
+    <% if room_unread_messages(room) > 0 %>
+      | <span class="badge"><%= room_unread_messages(room) %></span> unread
+    <% end %>
+    <% if room.messages.first %>
+      | updated <%= time_ago_in_words(room.messages.first.created_at) %> ago
+    <% end %>
+  </div>
 </div>
 <% end %>

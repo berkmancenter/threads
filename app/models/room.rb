@@ -17,4 +17,8 @@ class Room < ApplicationRecord
   has_many :users, through: :messages
 
   validates :title, presence: true, length: { maximum: 1000 }
+
+  def self.sorted_by_last_message
+    Room.includes(:messages).order('messages.created_at DESC NULLS LAST')
+  end
 end
