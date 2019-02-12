@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class RoomsController < ApplicationController
-  before_action :load_rooms, only: %i[index show]
+  before_action :load_rooms, only: %i[index show simple]
 
   def index; end
 
@@ -42,6 +42,10 @@ class RoomsController < ApplicationController
     @room = Room.find(params[:id])
     @room.destroy
     redirect_to rooms_url, notice: 'Room is deleted successfully'
+  end
+
+  def simple
+    render @rooms
   end
 
   private
