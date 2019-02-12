@@ -7,9 +7,18 @@
 
   App.room = App.cable.subscriptions.create({channel: 'RoomChannel', room_id: roomId}, {
     received: function (data) {
+      let goDown = false;
+
+      if($messageArea.scrollTop() + $messageArea.innerHeight() >= $messageArea[0].scrollHeight) {
+        goDown = true;
+      }
+
       $messageArea.append(this.renderMessage(data));
       $messageForm.val('');
-      scrollToBottom();
+
+      if (goDown === true) {
+        scrollToBottom();
+      }
     },
     renderMessage: function (data) { return messageItemTmpl(data.username, data.content); }
   });
