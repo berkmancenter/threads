@@ -29,7 +29,12 @@ class User < ApplicationRecord
 
   has_many :messages
   has_many :rooms, through: :messages
+  has_and_belongs_to_many :roles
 
   validates :username, presence: true, uniqueness: true, length: { minimum: 3, maximum: 64 }
   validates :email, presence: true, uniqueness: true, format: { with: VALID_EMAIL_REGEX }
+
+  def role?(role)
+    roles.include?(role)
+  end
 end
