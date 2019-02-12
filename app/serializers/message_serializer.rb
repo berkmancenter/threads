@@ -3,6 +3,6 @@ class MessageSerializer < ActiveModel::Serializer
   attributes :id, :username, :content
 
   def username
-    object.author
+    object.username
   end
 end

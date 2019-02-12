@@ -8,8 +8,5 @@ class CreateUserRoles < ActiveRecord::Migration[5.0]
       t.belongs_to :role
       t.belongs_to :user
     end
-
-    add_index(:roles_users, :role_id)
-    add_index(:roles_users, :user_id)
   end
 end

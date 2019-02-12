@@ -2,10 +2,11 @@
 class MessagesController < ApplicationController
   def create
     room_id = params[:room_id]
+    room = Room.find(params[:room_id])
     message = current_or_guest_user.messages.build(message_params.merge(room_id: room_id))
     if message.save
       RoomUser.update_last_read_message!(room_id, current_or_guest_user.id, message.id)
-      ActionCable.server.broadcast("room_#{room_id}", content: message.content, username: current_or_guest_user.username)
+      ActionCable.server.broadcast("room_#{room_id}", content: message.content, username: current_or_guest_user.nickname_in_room(room))
       ActionCable.server.broadcast('unread_message', room_id: room_id)
       head :ok
     else
