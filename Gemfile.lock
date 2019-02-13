@@ -86,8 +86,6 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
-    coolline (0.5.0)
-      unicode_utils (~> 1.4)
     database_rewinder (0.8.0)
     debug_inspector (0.0.2)
     devise (4.2.1)
@@ -167,8 +165,6 @@ GEM
     pry-byebug (3.4.2)
       byebug (~> 9.0)
       pry (~> 0.10)
-    pry-coolline (0.2.5)
-      coolline (~> 0.5)
     pry-doc (0.10.0)
       pry (~> 0.9)
       yard (~> 0.9)
@@ -303,7 +299,6 @@ GEM
     uglifier (3.2.0)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.2.1)
-    unicode_utils (1.4.0)
     uniform_notifier (1.10.0)
     warden (1.2.7)
       rack (>= 1.0)
@@ -342,7 +337,6 @@ DEPENDENCIES
   listen (~> 3.0.5)
   pg (~> 0.18)
   pry-byebug
-  pry-coolline
   pry-doc
   pry-rails
   pry-stack_explorer

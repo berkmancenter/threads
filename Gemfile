@@ -29,7 +29,6 @@ group :development, :test do
   gem 'pry-doc'
   gem 'pry-stack_explorer'
   gem 'pry-byebug'
-  gem 'pry-coolline'
 
   gem 'awesome_print'
 
