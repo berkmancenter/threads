@@ -1,0 +1,32 @@
+<div class="container">
+  <h2 class="text-center">Add Instance</h2>
+
+  <%= form_for @instance, url: instances_path, html: { class: 'form-horizontal' } do |f| %>
+    <div class="form-group">
+      <%= f.label :title, class: 'control-label col-sm-2' %>
+      <div class="col-sm-10">
+        <%= f.text_field :title, class: 'form-control' %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :closed, class: 'control-label col-sm-2' %>
+      <div class="col-sm-10">
+        <%= f.check_box :closed %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :private, class: 'control-label col-sm-2' %>
+      <div class="col-sm-10">
+        <%= f.check_box :private %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-10 col-sm-offset-2">
+        <%= f.submit 'Create', class: 'btn btn-success' %>
+      </div>
+    </div>
+  <% end %>
+</div>

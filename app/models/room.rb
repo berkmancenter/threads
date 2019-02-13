@@ -16,6 +16,7 @@ class Room < ApplicationRecord
   has_many :messages
   has_many :users, through: :messages
   has_many :room_user_nicknames, dependent: :destroy
+  belongs_to :instance
 
   validates :title, presence: true, length: { maximum: 1000 }
 

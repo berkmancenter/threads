@@ -1,5 +1,9 @@
 .navbar {
   padding: 10px 0;
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+
   > .container .navbar-brand {
     margin-left: 0;
   }

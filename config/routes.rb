@@ -23,7 +23,9 @@ Rails.application.routes.draw do
     end
   end
 
-  root to: 'rooms#index'
+  resources :instances
+
+  root to: 'instances#index'
 
   mount ActionCable.server => '/cable'
 end

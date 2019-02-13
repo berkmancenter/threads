@@ -1,0 +1,10 @@
+<%= link_to instance_path(instance), class: 'list-group-item' do %>
+<div class="media instance-item" data-instance-id="<%= instance.id %>">
+  <div class="media-left">
+  </div>
+  <div class="media-body">
+    <h4 class="media-heading"><%= instance.title %></h4>
+    <%= instance.rooms.count %> <%= 'thread'.pluralize(instance.rooms.count) %>
+  </div>
+</div>
+<% end %>

@@ -1,0 +1,16 @@
+<section class="instance">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <%= render 'rooms/rooms', rooms: @instance.rooms %>
+      </div>
+      <div class="col-sm-6">
+        <div class="text-center section-header">
+          <%= image_tag("juryx-activethread.png") %>
+        </div>
+
+         Select a thread on the left to view the conversation.
+      </div>
+    </div>
+  </div>
+</section>
