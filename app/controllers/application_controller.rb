@@ -55,4 +55,8 @@ class ApplicationController < ActionController::Base
     session[:guest_user_id] = u.id
     u
   end
+
+  def current_ability
+    @current_ability ||= Ability.new(current_or_guest_user)
+  end
 end

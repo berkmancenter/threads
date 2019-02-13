@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 class RoomsController < ApplicationController
-  before_action :load_rooms, only: %i[index show simple]
-
-  def index; end
+  before_action :load_rooms, only: %i[show simple]
 
   def show
     @room = Room.find(params[:id])
@@ -76,6 +74,7 @@ class RoomsController < ApplicationController
   end
 
   def load_rooms
-    @rooms = Room.sorted_by_last_message
+    @room = Room.find(params[:id] || params[:room_id])
+    @rooms = @room.instance.rooms_sorted_by_last_message
   end
 end

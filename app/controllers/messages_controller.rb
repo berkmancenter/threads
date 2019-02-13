@@ -19,12 +19,6 @@ class MessagesController < ApplicationController
 
   def destroy; end
 
-  def old
-    room = Room.find(params[:room_id])
-    messages = room.messages.where('id < ?', params[:first_message_id]).limit(40).order(id: :desc)
-    render json: messages, each_serializer: MessageSerializer, status: :ok
-  end
-
   private
 
   def message_params

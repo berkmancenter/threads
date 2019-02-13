@@ -4,4 +4,8 @@ class Instance < ApplicationRecord
   has_many :rooms
 
   validates :title, presence: true, length: { maximum: 1000 }
+
+  def rooms_sorted_by_last_message
+    rooms.includes(:messages).order('messages.created_at DESC NULLS LAST')
+  end
 end
