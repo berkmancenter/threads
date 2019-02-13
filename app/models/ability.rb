@@ -10,6 +10,7 @@ class Ability
 
     if user.role? Role.anonymous
       can :read, Instance, private: false
+      can :create, Room
     end
 
     can :read, Room
