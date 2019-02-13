@@ -45,6 +45,10 @@ class RoomsController < ApplicationController
   end
 
   def simple
+    @room = Room.find(params[:room_id])
+
+    RoomUser.create_or_update!(@room.id, current_or_guest_user.id, @room.messages&.last&.id)
+
     render @rooms
   end
 
