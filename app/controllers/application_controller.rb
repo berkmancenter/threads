@@ -4,6 +4,10 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_or_guest_user
 
+  rescue_from CanCan::AccessDenied do |_exception|
+    redirect_to main_app.root_path, alert: 'Permission denied!'
+  end
+
   # if user is logged in, return current_user, else return guest_user
   def current_or_guest_user
     if current_user
@@ -42,8 +46,12 @@ class ApplicationController < ActionController::Base
   end
 
   def create_guest_user
-    u = User.new(:username => "guest_#{Time.now.to_i}#{rand(100)}", :email => "guest_#{Time.now.to_i}#{rand(100)}@example.com")
-    u.save!(:validate => false)
+    u = User.new(
+      username: "guest_#{Time.now.to_i}#{rand(100)}",
+      email: "guest_#{Time.now.to_i}#{rand(100)}@example.com",
+      roles: [Role.find_by(name: 'anonymous')]
+    )
+    u.save!(validate: false)
     session[:guest_user_id] = u.id
     u
   end

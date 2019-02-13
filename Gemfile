@@ -20,6 +20,7 @@ gem 'enumerize'
 gem 'carrierwave'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'rails_admin', '~> 1.3'
+gem 'cancancan', '~> 2.0'
 
 group :development, :test do
   gem 'bullet'

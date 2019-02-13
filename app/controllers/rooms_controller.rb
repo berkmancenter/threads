@@ -6,16 +6,23 @@ class RoomsController < ApplicationController
 
   def show
     @room = Room.find(params[:id])
+
+    authorize! :read, @room
+
     @message = Message.new
-    @messages = @room.messages.last(40)
+    @messages = @room.messages
     RoomUser.create_or_update!(@room.id, current_or_guest_user.id, @messages&.last&.id)
   end
 
   def new
+    authorize! :create, Room
+
     @room = Room.new
   end
 
   def create
+    authorize! :create, Room
+
     @room = Room.new(room_params.merge(owner_id: current_or_guest_user.id))
     if @room.save
       RoomUser.create_or_update!(@room.id, current_or_guest_user.id, nil)
@@ -27,10 +34,15 @@ class RoomsController < ApplicationController
 
   def edit
     @room = Room.find(params[:id])
+
+    authorize! :update, @room
   end
 
   def update
     @room = Room.find(params[:id])
+
+    authorize! :update, @room
+
     if @room.update_attributes(room_params)
       redirect_to rooms_url, notice: 'Room is updated successfully'
     else
@@ -40,12 +52,17 @@ class RoomsController < ApplicationController
 
   def destroy
     @room = Room.find(params[:id])
+
+    authorize! :destroy, @room
+
     @room.destroy
     redirect_to rooms_url, notice: 'Room is deleted successfully'
   end
 
   def simple
     @room = Room.find(params[:room_id])
+
+    authorize! :read, @room
 
     RoomUser.create_or_update!(@room.id, current_or_guest_user.id, @room.messages&.last&.id)
 

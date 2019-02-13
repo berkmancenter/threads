@@ -68,6 +68,7 @@ GEM
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.10.0)
     byebug (9.0.6)
+    cancancan (2.3.0)
     carrierwave (1.0.0)
       activemodel (>= 4.0.0)
       activesupport (>= 4.0.0)
@@ -329,6 +330,7 @@ DEPENDENCIES
   bootstrap-sass (= 3.3.6)
   brakeman
   bullet
+  cancancan (~> 2.0)
   carrierwave
   coffee-rails (~> 4.2)
   database_rewinder
