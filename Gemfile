@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 source 'https://rubygems.org'
 
-ruby '2.4.5'
+ruby '2.4.1'
 
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 gem 'pg',    '~> 0.18'

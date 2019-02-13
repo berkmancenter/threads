@@ -1,4 +1,4 @@
-FROM ruby:2.4.5-alpine
+FROM ruby:2.4.1-alpine
 
 RUN apk update && apk add build-base nodejs postgresql-dev tzdata git
 
