@@ -6,6 +6,7 @@ class RoomsController < ApplicationController
 
   def show
     @room = Room.find(params[:id])
+    @instance = @room.instance
 
     authorize! :read, @room
 
