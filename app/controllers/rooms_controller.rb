@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 class RoomsController < ApplicationController
-  before_action :load_rooms, only: %i[show simple]
+  before_action :load_rooms, only: %i[index show simple]
+
+  def index; end
 
   def show
     @room = Room.find(params[:id])
@@ -15,17 +17,20 @@ class RoomsController < ApplicationController
   def new
     authorize! :create, Room
 
+    @instance = Instance.find(params[:id])
     @room = Room.new
   end
 
   def create
     authorize! :create, Room
 
+    @instance = Instance.find(room_params[:instance_id])
     @room = Room.new(room_params.merge(owner_id: current_or_guest_user.id))
     if @room.save
       RoomUser.create_or_update!(@room.id, current_or_guest_user.id, nil)
-      redirect_to rooms_url, notice: 'Room is created successfully'
+      redirect_to @instance, notice: 'Room is created successfully'
     else
+      flash.now[:alert] = @room.errors.full_messages.join(', ')
       render :new
     end
   end
@@ -70,7 +75,7 @@ class RoomsController < ApplicationController
   private
 
   def room_params
-    params.require(:room).permit(:title)
+    params.require(:room).permit(:title, :instance_id)
   end
 
   def load_rooms

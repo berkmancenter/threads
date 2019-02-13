@@ -23,7 +23,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :instances
+  resources :instances do
+    member do
+      get :new_room, to: 'rooms#new'
+    end
+  end
 
   root to: 'instances#index'
 

@@ -15,6 +15,7 @@
         <%= f.submit 'Create', class: 'btn btn-success' %>
       </div>
     </div>
-  <% end %>
 
+    <%= f.hidden_field :instance_id, value: @instance.id %>
+  <% end %>
 </div>

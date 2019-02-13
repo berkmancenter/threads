@@ -19,4 +19,5 @@ class Room < ApplicationRecord
   belongs_to :instance
 
   validates :title, presence: true, length: { maximum: 1000 }
+  validates :instance, presence: true
 end
