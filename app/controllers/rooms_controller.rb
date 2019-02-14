@@ -16,16 +16,18 @@ class RoomsController < ApplicationController
   end
 
   def new
-    authorize! :create, Room
-
     @instance = Instance.find(params[:id])
+
+    authorize! :create_room_in, @instance
+
     @room = Room.new
   end
 
   def create
-    authorize! :create, Room
-
     @instance = Instance.find(room_params[:instance_id])
+
+    authorize! :create_room_in, @instance
+
     @room = Room.new(room_params.merge(owner_id: current_or_guest_user.id))
     if @room.save
       RoomUser.create_or_update!(@room.id, current_or_guest_user.id, nil)

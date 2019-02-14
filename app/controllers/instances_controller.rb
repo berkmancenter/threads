@@ -39,9 +39,57 @@ class InstancesController < ApplicationController
     authorize! :update, @instance
 
     if @instance.update_attributes(instance_params)
-      redirect_to instances_url, notice: 'Instance is updated successfully'
+      redirect_to instances_url, notice: 'Topic has been updated successfully'
     else
       render :edit
+    end
+  end
+
+  def close
+    @instance = Instance.find(params[:id])
+
+    authorize! :update, @instance
+
+    if @instance.update_attributes(closed: true)
+      redirect_to request.referer, notice: 'Topic has been closed'
+    else
+      redirect_to request.referer, notice: 'Soemthing went wrong, try again'
+    end
+  end
+
+  def open
+    @instance = Instance.find(params[:id])
+
+    authorize! :update, @instance
+
+    if @instance.update_attributes(closed: false)
+      redirect_to request.referer, notice: 'Topic has been opened'
+    else
+      redirect_to request.referer, notice: 'Soemthing went wrong, try again'
+    end
+  end
+
+  def private
+    @instance = Instance.find(params[:id])
+
+    authorize! :update, @instance
+
+    if @instance.update_attributes(private: true)
+      redirect_to request.referer, notice: 'Topic has been set as private'
+    else
+      redirect_to request.referer, notice: 'Soemthing went wrong, try again'
+    end
+  end
+
+  def unprivate
+    @instance = Instance.find(params[:id])
+
+    authorize! :update, @instance
+
+    if @instance.update_attributes(private: false)
+      redirect_to request.referer, notice: 'Topic has been set as not private'
+    else
+      redirect_to request.referer, notice: 'Soemthing went wrong, try again'
     end
   end
 

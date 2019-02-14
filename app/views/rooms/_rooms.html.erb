@@ -7,7 +7,7 @@
 </div>
 
 <div class="room-control">
-  <% if can? :create, Room %>
+  <% if can? :create_room_in, @instance %>
     <%= link_to 'Submit New Thread', new_room_instance_path(@instance), class: 'btn btn-success' %>
   <% end %>
 </div>

@@ -26,6 +26,10 @@ Rails.application.routes.draw do
   resources :instances do
     member do
       get :new_room, to: 'rooms#new'
+      get :close
+      get :open
+      get :private
+      get :unprivate
     end
   end
 
