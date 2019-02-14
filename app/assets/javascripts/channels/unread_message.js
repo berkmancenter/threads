@@ -6,8 +6,10 @@
         id: $('#room-id').val(),
         access_token: $('#access-token').val()
       }, function (data) {
-        var list = $('.room-list').first();
-        list.html(data);
+        if ($('.room-list:hover').length === 0) {
+          var list = $('.room-list').first();
+          list.html(data);
+        }
       })
     }
   });
