@@ -17,5 +17,6 @@
     </div>
 
     <%= f.hidden_field :instance_id, value: @instance.id %>
+    <%= hidden_field_tag :access_token, params[:access_token] %>
   <% end %>
 </div>

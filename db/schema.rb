@@ -10,18 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190213163906) do
+ActiveRecord::Schema.define(version: 20190214134815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "instances", force: :cascade do |t|
-    t.integer  "owner_id",   null: false
-    t.text     "title",      null: false
-    t.boolean  "closed",     null: false
-    t.boolean  "private",    null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "owner_id",     null: false
+    t.text     "title",        null: false
+    t.boolean  "closed",       null: false
+    t.boolean  "private",      null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "access_token"
     t.index ["owner_id"], name: "index_instances_on_owner_id", using: :btree
   end
 

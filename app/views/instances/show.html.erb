@@ -15,6 +15,10 @@
           <% if @instance.private %>
             <%= link_to 'Make topic not private', unprivate_instance_path(@instance), class: 'btn btn-success' %>
           <% end %>
+
+          <% if @instance.private %>
+            <div class="instance-private-url">Private access url: <%= link_to instance_url(@instance, access_token: @instance.access_token), instance_url(@instance, access_token: @instance.access_token) %></div>
+          <% end %>
         <% end %>
       </div>
       <div class="col-sm-6">

@@ -27,5 +27,6 @@
   </div>
 
   <%= hidden_field_tag :room_id, @room.id, id: 'room-id' %>
+  <%= hidden_field_tag :access_token, params[:access_token], id: 'access-token' %>
   <%= hidden_field_tag :first_message_id, @messages&.first&.id, id: 'first-message-id' %>
 </section>

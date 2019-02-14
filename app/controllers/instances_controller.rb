@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class InstancesController < ApplicationController
   def index
-    @instances = Instance.where(private: false)
+    @instances = Instance.all_for_user(current_or_guest_user)
   end
 
   def show

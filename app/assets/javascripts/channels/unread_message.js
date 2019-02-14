@@ -3,7 +3,8 @@
   App.unread_message = App.cable.subscriptions.create('UnreadMessageChannel', {
     received: function (data) {
       $.get('/rooms/simple', {
-        room_id: $('#room-id').val()
+        room_id: $('#room-id').val(),
+        access_token: $('#access-token').val()
       }, function (data) {
         var list = $('.room-list').first();
         list.html(data);

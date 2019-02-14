@@ -31,7 +31,7 @@ class RoomsController < ApplicationController
     @room = Room.new(room_params.merge(owner_id: current_or_guest_user.id))
     if @room.save
       RoomUser.create_or_update!(@room.id, current_or_guest_user.id, nil)
-      redirect_to @instance, notice: 'Room is created successfully'
+      redirect_to instance_url(@instance, access_token: params[:access_token].present? ? params[:access_token]:nil), notice: 'Thread has been created successfully'
     else
       flash.now[:alert] = @room.errors.full_messages.join(', ')
       render :new
@@ -50,7 +50,7 @@ class RoomsController < ApplicationController
     authorize! :update, @room
 
     if @room.update_attributes(room_params)
-      redirect_to rooms_url, notice: 'Room is updated successfully'
+      redirect_to rooms_url, notice: 'Thread has been updated successfully'
     else
       render :edit
     end
@@ -62,7 +62,7 @@ class RoomsController < ApplicationController
     authorize! :destroy, @room
 
     @room.destroy
-    redirect_to rooms_url, notice: 'Room is deleted successfully'
+    redirect_to rooms_url, notice: 'Thread has been deleted successfully'
   end
 
   def simple
