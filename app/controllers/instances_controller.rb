@@ -45,6 +45,15 @@ class InstancesController < ApplicationController
     end
   end
 
+  def destroy
+    @instance = Instance.find(params[:id])
+
+    authorize! :destroy, @instance
+
+    @instance.destroy
+    redirect_to instances_url, notice: 'Topic has been deleted successfully'
+  end
+
   def close
     @instance = Instance.find(params[:id])
 

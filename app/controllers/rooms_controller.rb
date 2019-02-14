@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 class RoomsController < ApplicationController
   before_action :load_rooms, only: %i[index show simple]
+  before_action :load_room, only: %i[show edit update destroy simple]
 
   def index; end
 
   def show
-    @room = Room.find(params[:id])
     @instance = @room.instance
 
     authorize! :read, @room
@@ -39,14 +39,10 @@ class RoomsController < ApplicationController
   end
 
   def edit
-    @room = Room.find(params[:id])
-
     authorize! :update, @room
   end
 
   def update
-    @room = Room.find(params[:id])
-
     authorize! :update, @room
 
     if @room.update_attributes(room_params)
@@ -57,8 +53,6 @@ class RoomsController < ApplicationController
   end
 
   def destroy
-    @room = Room.find(params[:id])
-
     authorize! :destroy, @room
 
     @room.destroy
@@ -66,8 +60,6 @@ class RoomsController < ApplicationController
   end
 
   def simple
-    @room = Room.find(params[:room_id])
-
     authorize! :read, @room
 
     RoomUser.create_or_update!(@room.id, current_or_guest_user.id, @room.messages&.last&.id)
@@ -84,5 +76,9 @@ class RoomsController < ApplicationController
   def load_rooms
     @room = Room.find(params[:id] || params[:room_id])
     @rooms = @room.instance.rooms_sorted_by_last_message
+  end
+
+  def load_room
+    @room = Room.find(params[:id])
   end
 end

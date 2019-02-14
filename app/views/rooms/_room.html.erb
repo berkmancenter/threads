@@ -1,4 +1,4 @@
-<%= link_to room_path(room, access_token: params[:access_token].present? ? params[:access_token]:nil), class: "list-group-item #{ 'active' if room.id == params[:id].to_i && params[:controller] == 'rooms' }" do %>
+<%= link_to room_path(room, access_token: params[:access_token].present? ? params[:access_token]:nil), class: "list-group-item #{ 'active' if room.id == (params[:id].to_i) && params[:controller] == 'rooms' }" do %>
 <div class="media room-item" data-room-id="<%= room.id %>">
   <div class="media-left">
   </div>

@@ -15,6 +15,7 @@
           <% if @instance.private %>
             <%= link_to 'Make topic not private', unprivate_instance_path(@instance), class: 'btn btn-success' %>
           <% end %>
+          <%= link_to 'Delete topic', instance_path(@instance), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
 
           <% if @instance.private %>
             <div class="instance-private-url">Private access url: <%= link_to instance_url(@instance, access_token: @instance.access_token), instance_url(@instance, access_token: @instance.access_token) %></div>

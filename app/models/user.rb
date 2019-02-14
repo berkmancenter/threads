@@ -19,6 +19,8 @@ class User < ApplicationRecord
   end
 
   def nickname_in_room(room)
+    return 'OP' if room.owner_id == id
+
     nickname_in_room = RoomUserNickname.where(
       room: room,
       user: self

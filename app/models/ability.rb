@@ -8,14 +8,21 @@ class Ability
       can :manage, :all
     end
 
-    if user.role? Role.moderator
-      can :read, Instance
-      can :update, Instance
-      can :create_room_in, Instance
-      can :read, Room
+    # if user.role? Role.moderator
+    #   can :read, Instance
+    #   can :update, Instance
+    #   can :create_room_in, Instance
+    #   can :read, Room
+    # end
+
+    if user.role?(Role.owner)
+      can :create, Instance
+      can :destroy, Instance do |instance|
+        user == instance.owner
+      end
     end
 
-    if user.role?(Role.anonymous) || user.role?(Role.owner)
+    if user.role?(Role.anonymous) || user.role?(Role.owner) || user.role?(Role.moderator)
       can :read, Instance do |instance|
         instance.private == false || instance.access_token == params[:access_token]
       end
