@@ -4,6 +4,8 @@ class Instance < ApplicationRecord
 
   belongs_to :owner, class_name: User, foreign_key: :owner_id
   has_many :rooms, dependent: :destroy
+  has_many :moderatorships, dependent: :destroy
+  has_many :moderators, through: :moderatorships, source: :user
 
   validates :title, presence: true, length: { maximum: 1000 }
 

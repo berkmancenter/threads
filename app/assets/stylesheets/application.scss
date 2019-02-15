@@ -1,9 +1,10 @@
 @charset "UTF-8";
 
 @import "base/base";
-
 @import "layout/header";
 @import "layout/footer";
+@import "select2.css";
+@import "select2-bootstrap";
 
 .login {
   width: 400px;

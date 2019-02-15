@@ -6,20 +6,8 @@ class Ability
 
     if user.role? Role.admin
       can :manage, :all
-    end
 
-    # if user.role? Role.moderator
-    #   can :read, Instance
-    #   can :update, Instance
-    #   can :create_room_in, Instance
-    #   can :read, Room
-    # end
-
-    if user.role?(Role.owner)
-      can :create, Instance
-      can :destroy, Instance do |instance|
-        user == instance.owner
-      end
+      return
     end
 
     if user.role?(Role.anonymous) || user.role?(Role.owner) || user.role?(Role.moderator)
@@ -27,13 +15,26 @@ class Ability
         instance.private == false || instance.access_token == params[:access_token]
       end
       can :create_room_in, Instance do |instance|
-        (user == instance.owner || !instance.closed) && (instance.private == false || instance.access_token == params[:access_token])
+        ((instance.moderators.include?(user) || user == instance.owner || !instance.closed)) && (instance.private == false || instance.access_token == params[:access_token])
       end
       can :update, Instance do |instance|
         user == instance.owner
       end
+      can :toggle_open_topic, Instance do |instance|
+        user == instance.owner || instance.moderators.include?(user)
+      end
+      can :set_moderators, Instance do |instance|
+        user == instance.owner
+      end
       can :read, Room do |room|
         room.instance.private == false || room.instance.access_token == params[:access_token]
+      end
+    end
+
+    if user.role?(Role.owner)
+      can :create, Instance
+      can :destroy, Instance do |instance|
+        user == instance.owner
       end
     end
   end

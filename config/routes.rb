@@ -30,6 +30,7 @@ Rails.application.routes.draw do
       get :open
       get :private
       get :unprivate
+      post :set_moderators
     end
   end
 

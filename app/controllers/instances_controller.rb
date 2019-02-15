@@ -57,24 +57,24 @@ class InstancesController < ApplicationController
   def close
     @instance = Instance.find(params[:id])
 
-    authorize! :update, @instance
+    authorize! :toggle_open_topic, @instance
 
     if @instance.update_attributes(closed: true)
       redirect_to request.referer, notice: 'Topic has been closed'
     else
-      redirect_to request.referer, notice: 'Soemthing went wrong, try again'
+      redirect_to request.referer, notice: 'Something went wrong, try again'
     end
   end
 
   def open
     @instance = Instance.find(params[:id])
 
-    authorize! :update, @instance
+    authorize! :toggle_open_topic, @instance
 
     if @instance.update_attributes(closed: false)
       redirect_to request.referer, notice: 'Topic has been opened'
     else
-      redirect_to request.referer, notice: 'Soemthing went wrong, try again'
+      redirect_to request.referer, notice: 'Something went wrong, try again'
     end
   end
 
@@ -86,7 +86,7 @@ class InstancesController < ApplicationController
     if @instance.update_attributes(private: true)
       redirect_to request.referer, notice: 'Topic has been set as private'
     else
-      redirect_to request.referer, notice: 'Soemthing went wrong, try again'
+      redirect_to request.referer, notice: 'Something went wrong, try again'
     end
   end
 
@@ -98,13 +98,33 @@ class InstancesController < ApplicationController
     if @instance.update_attributes(private: false)
       redirect_to request.referer, notice: 'Topic has been set as not private'
     else
-      redirect_to request.referer, notice: 'Soemthing went wrong, try again'
+      redirect_to request.referer, notice: 'Something went wrong, try again'
+    end
+  end
+
+  def set_moderators
+    @instance = Instance.find(params[:id])
+
+    authorize! :set_moderators, @instance
+
+    users = User.where(id: params[:instance][:moderators])
+    users.each do |user|
+      unless user.role? Role.moderator
+        user.roles << Role.moderator
+        user.save!
+      end
+    end
+
+    if @instance.update_attributes(moderators: User.where(id: params[:instance][:moderators]))
+      redirect_to request.referer, notice: 'Moderators have been set'
+    else
+      redirect_to request.referer, notice: 'Something went wrong, try again'
     end
   end
 
   private
 
   def instance_params
-    params.require(:instance).permit(:title, :closed, :private)
+    params.require(:instance).permit(:title, :closed, :private, :moderators)
   end
 end
