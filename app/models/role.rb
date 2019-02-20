@@ -3,6 +3,7 @@ class Role < ActiveRecord::Base
     admin
     owner
     moderator
+    registered
     anonymous
   )
 

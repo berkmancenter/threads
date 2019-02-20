@@ -37,5 +37,18 @@ class Ability
         user == instance.owner
       end
     end
+
+    if user.role?(Role.registered)
+      can :read, Instance do |instance|
+        instance.private == false || instance.access_token == params[:access_token]
+      end
+      can :create_room_in, Instance do |instance|
+        ((instance.moderators.include?(user) || user == instance.owner || !instance.closed)) && (instance.private == false || instance.access_token == params[:access_token])
+      end
+      can :read, Room do |room|
+        room.instance.private == false || room.instance.access_token == params[:access_token]
+      end
+      can :create, Instance
+    end
   end
 end

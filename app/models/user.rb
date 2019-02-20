@@ -4,6 +4,8 @@ require 'faker'
 class User < ApplicationRecord
   VALID_EMAIL_REGEX = /\A([^@\s]{1,64})@((?:[-\p{L}\d]+\.)+\p{L}{2,})\z/i
 
+  before_create :set_default_role
+
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
   has_many :messages
@@ -43,5 +45,11 @@ class User < ApplicationRecord
     end
 
     nickname_in_room.nickname
+  end
+
+  private
+
+  def set_default_role
+    roles << Role.registered
   end
 end

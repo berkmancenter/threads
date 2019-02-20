@@ -29,7 +29,7 @@
               <div class="form-group">
                 <div class="col-sm-10">
                   Select moderators:
-                  <%= f.select :moderators, options_for_select(User.all.collect {|p| [ p.username, p.id ] }, @instance.moderators.pluck(:id)), {}, { class: 'fancy-dropdown', multiple: 'multiple' } %>
+                  <%= f.select :moderators, options_for_select(User.all.reject { |u| u.roles.include?(Role.anonymous) }.collect { |u| [ u.username, u.id ] }, @instance.moderators.pluck(:id)), {}, { class: 'fancy-dropdown', multiple: 'multiple' } %>
                   <%= f.submit 'Save moderators', class: 'btn btn-success' %>
                 </div>
               </div>
