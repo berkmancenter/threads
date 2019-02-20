@@ -50,6 +50,8 @@ class User < ApplicationRecord
   private
 
   def set_default_role
-    roles << Role.registered
+    unless roles.include?(Role.anonymous)
+      roles << Role.registered
+    end
   end
 end
