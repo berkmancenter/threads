@@ -1,8 +1,6 @@
-## rails-chat-app
+## Threads
 
 This is a small chat app using Rails 5 new feature - ActionCable. It has chatroom and new message notification.
-
-**Demo**: <http://rails-example-chat-app.herokuapp.com>
 
 ## Dev-enviroment
 

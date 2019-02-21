@@ -53,8 +53,14 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  # Devise setting
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  # Mailer settings
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
+  config.action_mailer.delivery_method = ENV['MAILER_DELIVERY_METHOD'] || :test
+  config.action_mailer.smtp_settings = {
+    address: ENV['SMTP_ADDRESS'] || 'localhost',
+    port: ENV['SMTP_PORT'] || 1025,
+    openssl_verify_mode: ENV['SMTP_VERIFY_MODE'] || 'none'
+  }
 
   config.action_cable.url = 'ws://localhost:28080/cable'
   config.action_cable.allowed_request_origins = [/http:\/\/*/, /https:\/\/*/]

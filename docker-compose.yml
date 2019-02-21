@@ -21,6 +21,7 @@ services:
     build: .
     ports:
       - '3000:3000'
+      - '1080:1080'
     volumes:
       - '.:/app'
     env_file:

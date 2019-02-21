@@ -37,9 +37,9 @@ Rails.application.configure do
 
   # Mount Action Cable outside main process or domain
   # config.action_cable.mount_path = nil
-  config.action_cable.url = 'wss://rails-example-chat-app.herokuapp.com/cable'
-  config.action_cable.allowed_request_origins = ['http://rails-example-chat-app.herokuapp.com',
-                                                 'https://rails-example-chat-app.herokuapp.com']
+  config.action_cable.url = 'wss://example.com/cable'
+  config.action_cable.allowed_request_origins = ['http://example.com',
+                                                 'https://example.com']
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
@@ -82,6 +82,14 @@ Rails.application.configure do
     logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
+
+  # Mailer settings
+  config.action_mailer.delivery_method = ENV['MAILER_DELIVERY_METHOD'] || :smtp
+  config.action_mailer.smtp_settings = SMTP_SETTINGS
+  config.action_mailer.default_url_options = {
+    host: (ENV['EMAIL_DOMAIN'] || 'example.com')
+  }
+  config.action_mailer.default_url_options = { host: (ENV['EMAIL_DOMAIN'] || 'example.com') }
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false

@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   before_create :set_default_role
 
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   has_many :messages
   has_many :rooms, through: :messages
