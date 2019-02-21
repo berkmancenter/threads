@@ -54,7 +54,7 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   # Mailer settings
-  config.action_mailer.default_url_options = { host: 'localhost:3000' }
+  config.action_mailer.default_url_options = { host: (ENV['EMAIL_DOMAIN'] || 'localhost:3000') }
   config.action_mailer.delivery_method = ENV['MAILER_DELIVERY_METHOD']&.to_sym || :test
   config.action_mailer.smtp_settings = {
     address: ENV['SMTP_ADDRESS'] || 'localhost',
