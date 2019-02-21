@@ -26,3 +26,5 @@ coverage
 /config/database.yml
 /config/puma.rb
 /config/cable.yml
+
+.env
