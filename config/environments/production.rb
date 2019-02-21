@@ -84,7 +84,7 @@ Rails.application.configure do
   end
 
   # Mailer settings
-  config.action_mailer.delivery_method = ENV['MAILER_DELIVERY_METHOD'] || :smtp
+  config.action_mailer.delivery_method = ENV['MAILER_DELIVERY_METHOD']&.to_sym || :smtp
   config.action_mailer.smtp_settings = SMTP_SETTINGS
   config.action_mailer.default_url_options = {
     host: (ENV['EMAIL_DOMAIN'] || 'example.com')

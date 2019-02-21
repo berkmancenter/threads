@@ -55,7 +55,7 @@ Rails.application.configure do
 
   # Mailer settings
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
-  config.action_mailer.delivery_method = ENV['MAILER_DELIVERY_METHOD'] || :test
+  config.action_mailer.delivery_method = ENV['MAILER_DELIVERY_METHOD']&.to_sym || :test
   config.action_mailer.smtp_settings = {
     address: ENV['SMTP_ADDRESS'] || 'localhost',
     port: ENV['SMTP_PORT'] || 1025,
