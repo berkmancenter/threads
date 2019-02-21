@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 
 ruby '2.4.1'
 
-gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
+gem 'rails', '~> 5.0.7'
 gem 'pg',    '~> 0.18'
 gem 'puma',  '~> 3.0'
 
@@ -51,7 +51,7 @@ group :development do
   gem 'spring-commands-rspec'
   gem 'spring-commands-rubocop'
 
-  gem 'rubocop', '~> 0.42.0', require: false
+  gem 'rubocop'
   gem 'rails_best_practices', require: false
   gem 'brakeman', require: false
 
