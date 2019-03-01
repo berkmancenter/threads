@@ -62,6 +62,6 @@ Rails.application.configure do
     openssl_verify_mode: ENV['SMTP_VERIFY_MODE'] || 'none'
   }
 
-  config.action_cable.url = 'ws://localhost:28080/cable'
+  config.action_cable.url = ENV['ACTION_CABLE_URL'] || 'ws://localhost:28080/cable'
   config.action_cable.allowed_request_origins = [/http:\/\/*/, /https:\/\/*/]
 end
