@@ -11,7 +11,7 @@ class RoomsController < ApplicationController
     authorize! :read, @room
 
     @message = Message.new
-    @messages = @room.messages
+    @messages = @room.messages.order(:created_at)
     RoomUser.create_or_update!(@room.id, current_or_guest_user.id, @messages&.last&.id)
   end
 
