@@ -15,7 +15,7 @@
 class RoomUser < ApplicationRecord
   belongs_to :user
   belongs_to :room
-  belongs_to :last_read_message, class_name: Message, foreign_key: :last_read_message_id, optional: true
+  belongs_to :last_read_message, class_name: 'Message', foreign_key: :last_read_message_id, optional: true
 
   def self.create_or_update!(room_id, user_id, last_read_message_id)
     item = find_by(room_id: room_id, user_id: user_id)

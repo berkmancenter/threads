@@ -2,7 +2,7 @@
 class Instance < ApplicationRecord
   before_create :generate_token
 
-  belongs_to :owner, class_name: User, foreign_key: :owner_id
+  belongs_to :owner, class_name: 'User', foreign_key: :owner_id
   has_many :rooms, dependent: :destroy
   has_many :moderatorships, dependent: :destroy
   has_many :moderators, through: :moderatorships, source: :user
