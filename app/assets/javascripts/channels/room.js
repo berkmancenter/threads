@@ -17,30 +17,11 @@
       $messageForm.val('');
 
       if (goDown === true) {
-        scrollToBottom();
+        scrollToBottom($messageArea);
       }
     },
     renderMessage: function (data) { return messageItemTmpl(data.username, data.content); }
   });
-
-  $(function () {
-    scrollToBottom();
-    onEnterMessageform();
-  });
-
-  function scrollToBottom () {
-    $messageArea.scrollTop($messageArea[0].scrollHeight);
-  }
-
-  function onEnterMessageform () {
-    $messageForm.on('keydown', function (e) {
-      if (!this.value || !this.value.trim()) return;
-      if (e.keyCode == 13 && !e.shiftKey) {
-        e.preventDefault();
-        $('form#new_message').submit();
-      }
-    });
-  }
 
   function messageItemTmpl(user, message) {
     return '<div class="message-item"><strong class="message-user">'+ user +': </strong><span>'+ message +'</span></div>'
