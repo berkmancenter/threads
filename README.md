@@ -16,6 +16,7 @@ Threads is a simple, anonymous discussion tool.
 
 ### Docker
 
+* `cp .env.example .env`
 * `docker-compose up`
 * `docker-compose exec website sh`
 * `bundle exec rake db:create`
