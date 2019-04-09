@@ -26,10 +26,12 @@
 
   function handleMessageAreaExpanding () {
     var expander = $('.room-chat-expander').first();
+    var headerSubtitleText = $('.room-chat-header-subtitle').first().text();
 
     expander.on('click', function () {
       var roomsBox = $('.room-chat-rooms').first();
       var messagesBox = $('.room-chat-messages').first();
+      var headerSubtitle = $('.room-chat-header-subtitle').first();
 
       if (!messagesExpanded) {
         // Ugly fix (but works) to stop removeClass animations play with the
@@ -50,6 +52,7 @@
           'title',
           'Click to show the threads list'
         );
+        headerSubtitle.text($('.room-item.active .media-heading').text());
       } else {
         $('#expanderCustomCSS').remove();
         messagesBox
@@ -69,6 +72,7 @@
           'title',
           'Click to expand the message area'
         );
+        headerSubtitle.text(headerSubtitleText);
       }
 
       messagesExpanded = !messagesExpanded;
