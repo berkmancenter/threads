@@ -31,5 +31,7 @@ module Threads
       config.log_tags  = [:subdomain, :uuid]
       config.logger    = ActiveSupport::TaggedLogging.new(logger)
     end
+
+    config.active_job.queue_adapter = :sidekiq
   end
 end
