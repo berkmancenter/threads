@@ -26,11 +26,12 @@
 
   function handleMessageAreaExpanding () {
     var expander = $('.room-chat-expander').first();
-    var headerSubtitleText = $('.room-chat-header-subtitle').first().text();
+    var headerTitleText = $('.room-chat-header-title').first().text();
 
     expander.on('click', function () {
       var roomsBox = $('.room-chat-rooms').first();
       var messagesBox = $('.room-chat-messages').first();
+      var headerTitle = $('.room-chat-header-title').first();
       var headerSubtitle = $('.room-chat-header-subtitle').first();
 
       if (!messagesExpanded) {
@@ -52,7 +53,8 @@
           'title',
           'Click to show the threads list'
         );
-        headerSubtitle.text($('.room-item.active .media-heading').text());
+        headerTitle.text($('.room-item.active .media-heading').text());
+        headerSubtitle.hide();
       } else {
         $('#expanderCustomCSS').remove();
         messagesBox
@@ -72,7 +74,8 @@
           'title',
           'Click to expand the message area'
         );
-        headerSubtitle.text(headerSubtitleText);
+        headerTitle.text(headerTitleText);
+        headerSubtitle.show();
       }
 
       messagesExpanded = !messagesExpanded;
