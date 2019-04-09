@@ -1,6 +1,8 @@
 (function () {
   var roomId = $('#room-id').val();
-  if (!roomId) return;
+  if (!roomId) {
+    return;
+  }
 
   var $messageArea = $('.message-area');
   var $messageForm = $('.message-form textarea');

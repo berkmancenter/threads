@@ -1,11 +1,14 @@
 <section class="room-chat">
   <div class="container">
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-6 room-chat-rooms">
         <%= render 'rooms/rooms', rooms: @rooms %>
       </div>
-      <div class="col-sm-6">
-        <div class="text-center section-header">
+      <div class="col-sm-6 room-chat-messages">
+        <div class="text-center section-header room-chat-header">
+          <a class="room-chat-expander" title="Click to expand the message area">
+            <%= fa_icon "expand" %>
+          </a>
           <h2 class="funny-red-font">Active thread</h2>
           <h5 class="funny-red-font">Only the replies to the one thread you selected</h5>
         </div>

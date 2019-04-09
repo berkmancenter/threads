@@ -363,6 +363,7 @@ DEPENDENCIES
   enumerize
   factory_girl_rails
   faker
+  font-awesome-rails (~> 4.7)
   jquery-rails
   listen (~> 3.0.5)
   pg (~> 0.18)

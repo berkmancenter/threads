@@ -5,6 +5,8 @@
 @import "layout/footer";
 @import "select2.css";
 @import "select2-bootstrap";
+@import "font-awesome";
+@import "room";
 
 .login {
   width: 400px;
@@ -22,23 +24,9 @@
   }
 }
 
-.message-area {
-  height: 420px;
-  overflow-y: scroll;
-  background: #f3f3f3;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 20px;
-}
-
 .room-control {
   margin-top: 20px;
   text-align: right;
-}
-
-.footer {
-  margin-top: 30px;
-  text-align: center;
 }
 
 .section-header {

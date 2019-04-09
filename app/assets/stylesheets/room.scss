@@ -1,0 +1,20 @@
+.room-chat-header {
+  position: relative;
+
+  .room-chat-expander {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    font-size: 24px;
+  }
+}
+
+.message-area {
+  height: 420px;
+  overflow-y: scroll;
+  background: #f3f3f3;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
