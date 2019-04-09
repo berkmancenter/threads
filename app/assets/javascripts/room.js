@@ -25,26 +25,47 @@
   }
 
   function handleMessageAreaExpanding () {
-    $('.room-chat-expander').on('click', function () {
+    var expander = $('.room-chat-expander').first();
+
+    expander.on('click', function () {
+      var roomsBox = $('.room-chat-rooms').first();
+      var messagesBox = $('.room-chat-messages').first();
+
       if (!messagesExpanded) {
-        $('.room-chat-messages').animate({ width: '100%' }, 600);
-        $('.room-chat-rooms').animate({ width: 'toggle' }, 450);
-        $('.room-chat-rooms').css({ maxHeight: '200px' }, 450);
-        $('.room-chat-expander i').removeClass('fa-expand');
-        $('.room-chat-expander i').addClass('fa-compress');
-        $('.room-chat-expander').attr(
+        // Ugly fix (but works) to stop removeClass animations play with the
+        // height of the messages container
+        $('head').append(
+          '<style id="expanderCustomCSS">.room-chat-messages { height: 100% !important; }</style>'
+        );
+        messagesBox
+          .removeClass('col-sm-6', 600)
+          .addClass('col-sm-12', 600);
+        roomsBox
+          .animate({ width: 'toggle' }, 450)
+          .css('maxHeight', '200px');
+        expander.find('i')
+          .removeClass('fa-expand')
+          .addClass('fa-compress');
+        expander.attr(
           'title',
           'Click to show the threads list'
         );
       } else {
-        $('.room-chat-messages').animate({ width: '50%' }, 300);
+        $('#expanderCustomCSS').remove();
+        messagesBox
+          .css('height', 'auto')
+          .addClass('col-sm-6', 300)
+          .removeClass('col-sm-12', 300);
         setTimeout(function () {
-          $('.room-chat-rooms').animate({ width: 'toggle' }, 450);
-          $('.room-chat-rooms').css({ maxHeight: 'auto' }, 450);
+          roomsBox.animate({ width: 'toggle' }, 450);
         }, 100);
-        $('.room-chat-expander i').addClass('fa-expand');
-        $('.room-chat-expander i').removeClass('fa-compress');
-        $('.room-chat-expander').attr(
+        setTimeout(function () {
+          roomsBox.css('maxHeight', 'none');
+        }, 250);
+        expander.find('i')
+          .addClass('fa-expand')
+          .removeClass('fa-compress');
+        expander.attr(
           'title',
           'Click to expand the message area'
         );
