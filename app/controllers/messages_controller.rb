@@ -3,6 +3,9 @@ class MessagesController < ApplicationController
   def create
     room_id = params[:room_id]
     room = Room.find(params[:room_id])
+
+    return head :not_acceptable if room.locked
+
     message = current_or_guest_user.messages.build(message_params.merge(room_id: room_id))
     if message.save
       RoomUser.update_last_read_message!(room_id, current_or_guest_user.id, message.id)

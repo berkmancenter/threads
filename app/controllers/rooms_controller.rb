@@ -67,6 +67,30 @@ class RoomsController < ApplicationController
     render @rooms
   end
 
+  def lock
+    @room = Room.find(params[:id])
+
+    authorize! :update, @room
+
+    if @room.update_attributes(locked: true)
+      redirect_to request.referer, notice: 'Thread has been locked'
+    else
+      redirect_to request.referer, notice: 'Something went wrong, try again'
+    end
+  end
+
+  def unlock
+    @room = Room.find(params[:id])
+
+    authorize! :update, @room
+
+    if @room.update_attributes(locked: false)
+      redirect_to request.referer, notice: 'Thread has been unlocked'
+    else
+      redirect_to request.referer, notice: 'Something went wrong, try again'
+    end
+  end
+
   private
 
   def room_params

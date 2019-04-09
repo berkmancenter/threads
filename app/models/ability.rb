@@ -29,6 +29,9 @@ class Ability
       can :read, Room do |room|
         room.instance.private == false || room.instance.access_token == params[:access_token]
       end
+      can :update, Room do |room|
+        user == room.instance.owner || room.instance.moderators.include?(user)
+      end
     end
 
     if user.role?(Role.owner)

@@ -21,6 +21,10 @@ Rails.application.routes.draw do
     collection do
       get :simple
     end
+    member do
+      get :lock
+      get :unlock
+    end
   end
 
   resources :instances do

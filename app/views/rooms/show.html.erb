@@ -22,7 +22,7 @@
         <div class="message-form">
           <%= form_for @message, url: room_messages_path(@room), remote: true, authencity_token: true do |f| %>
             <div class="form-group">
-              <%= f.text_area :content, class: 'form-control', placeholder: 'Message...' %>
+              <%= f.text_area :content, class: 'form-control', placeholder: 'Message...', disabled: @room.locked ? true : false %>
             </div>
           <% end %>
         </div>
