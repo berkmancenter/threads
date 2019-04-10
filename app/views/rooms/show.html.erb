@@ -22,7 +22,12 @@
         <div class="message-form">
           <%= form_for @message, url: room_messages_path(@room), remote: true, authencity_token: true do |f| %>
             <div class="form-group">
-              <%= f.text_area :content, class: 'form-control', placeholder: 'Message...', disabled: (@room.locked || current_or_guest_user.muted_in_room?(@room)) ? true : false %>
+              <%= f.text_area :content,
+                class: 'form-control',
+                placeholder: 'Message...',
+                disabled: (@room.locked || current_or_guest_user.muted_in_room?(@room)) ? true : false,
+                value: current_or_guest_user.muted_in_room?(@room) ? 'You\'ve been muted in this thread and can\'t post any new messages' : ''
+              %>
             </div>
           <% end %>
         </div>
