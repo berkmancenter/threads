@@ -15,17 +15,12 @@
         goDown = true;
       }
 
-      $messageArea.append(this.renderMessage(data));
+      $messageArea.append(data.message);
       $messageForm.val('');
 
       if (goDown === true) {
         scrollToBottom($messageArea);
       }
-    },
-    renderMessage: function (data) { return messageItemTmpl(data.username, data.content); }
+    }
   });
-
-  function messageItemTmpl(user, message) {
-    return '<div class="message-item"><strong class="message-user">'+ user +': </strong><span>'+ message +'</span></div>'
-  }
 })();

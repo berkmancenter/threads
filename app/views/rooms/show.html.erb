@@ -13,7 +13,7 @@
           <h5 class="funny-red-font room-chat-header-subtitle">Only the replies to the one thread you selected</h5>
         </div>
 
-        <div class="message-area">
+        <div class="message-area<%= ' message-area-editor' if can?(:update, @room) %>">
           <% @messages.each do |message| %>
             <%= render 'rooms/message', message: message, room: @room %>
           <% end %>

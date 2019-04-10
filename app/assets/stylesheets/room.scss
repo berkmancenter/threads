@@ -23,12 +23,22 @@
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 20px;
-  }
 
-  .message-item {
-    &.message-item-extra {
-      .message-user {
-        cursor: pointer;
+    .dropdown-menu {
+      visibility: hidden;
+    }
+
+    &.message-area-editor {
+      .dropdown-menu {
+        visibility: visible;
+      }
+
+      .message-item {
+        &.message-item-extra {
+          .message-user {
+            cursor: pointer;
+          }
+        }
       }
     }
   }

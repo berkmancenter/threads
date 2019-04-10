@@ -10,11 +10,22 @@ class MessagesController < ApplicationController
     message = current_or_guest_user.messages.build(message_params.merge(room_id: room_id))
     if message.save
       RoomUser.update_last_read_message!(room_id, current_or_guest_user.id, message.id)
-      ActionCable.server.broadcast("room_#{room_id}", content: message.content, username: current_or_guest_user.nickname_in_room(room))
+      ActionCable.server.broadcast(
+        "room_#{room_id}",
+        message: render_to_string(
+          'rooms/_message',
+          locals: {
+            message: message,
+            room: room
+          },
+          layout: false
+        )
+      )
       ActionCable.server.broadcast(
         'unread_message',
         room_id: room_id
       )
+
       head :ok
     else
       render json: message.errors.messages, status: :unprocessable_enity
