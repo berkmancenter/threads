@@ -10,3 +10,17 @@
   margin-top: 15px;
   float: right;
 }
+
+.room-list {
+  .dropdown-menu {
+    padding: 10px;
+
+    a {
+      padding: 3px 5px;
+    }
+
+    hr {
+      margin: 5px 0;
+    }
+  }
+}

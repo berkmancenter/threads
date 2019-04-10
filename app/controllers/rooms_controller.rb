@@ -91,6 +91,53 @@ class RoomsController < ApplicationController
     end
   end
 
+  def set_delayed_lock
+    @room = Room.find(params[:id])
+
+    if @room.locked
+      redirect_to request.referer,
+                  notice: 'Can\'t set a delayed lock on a locked thread'
+      return
+    end
+
+    authorize! :update, @room
+
+    lock_date = Time.now +
+                params[:days].to_i.days +
+                params[:hours].to_i.hours +
+                params[:minutes].to_i.minutes
+
+    @room.update_attributes!(planned_lock: lock_date)
+
+    # Cleaning exisiting jobs
+    queue_jobs = Sidekiq::ScheduledSet.new
+    queue_jobs.each do |queue_job|
+      if queue_job.klass == 'DelayedRoomLockWorker' && queue_job.args == [@room.id]
+        queue_job.delete
+      end
+    end
+
+    DelayedRoomLockWorker.perform_at(lock_date, @room.id)
+
+    redirect_to request.referer, notice: 'Thread will be locked on ' + lock_date.to_formatted_s(:long_ordinal)
+  end
+
+  def cancel_delayed_lock
+    @room = Room.find(params[:id])
+
+    @room.update_attributes!(planned_lock: nil)
+
+    # Cleaning exisiting jobs
+    queue_jobs = Sidekiq::ScheduledSet.new
+    queue_jobs.each do |queue_job|
+      if queue_job.klass == 'DelayedRoomLockWorker' && queue_job.args == [@room.id]
+        queue_job.delete
+      end
+    end
+
+    redirect_to request.referer, notice: 'Successfully cancelled the delayed lock'
+  end
+
   private
 
   def room_params

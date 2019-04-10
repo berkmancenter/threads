@@ -9,4 +9,4 @@ WORKDIR /app
 COPY . .
 RUN bundle install
 
-CMD puma -C config/puma.rb
+CMD (sidekiq --concurrency 2 &) && puma -C config/puma.rb

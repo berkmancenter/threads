@@ -24,6 +24,8 @@ Rails.application.routes.draw do
     member do
       get :lock
       get :unlock
+      post :set_delayed_lock
+      post :cancel_delayed_lock
     end
   end
 
@@ -41,4 +43,7 @@ Rails.application.routes.draw do
   root to: 'instances#index'
 
   mount ActionCable.server => '/cable'
+
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
 end
