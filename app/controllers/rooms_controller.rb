@@ -138,6 +138,16 @@ class RoomsController < ApplicationController
     redirect_to request.referer, notice: 'Successfully cancelled the delayed lock'
   end
 
+  def mute_user
+    @room = Room.find(params[:id])
+    @user = User.find(params[:user_id])
+
+    @room.messages.where(user: @user).destroy_all
+    MutedRoomUser.create!(room: @room, user: @user)
+
+    redirect_to request.referer, notice: @user.nickname_in_room(@room) + ' has been muted in this thread'
+  end
+
   private
 
   def room_params

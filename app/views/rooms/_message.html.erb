@@ -1,3 +1,21 @@
-<div class="message-item">
-  <strong class="message-user"><%= message.user.nickname_in_room(room) %>: </strong><span><%= message.content %></span>
-</div>
+<% if can? :update, room %>
+  <div class="message-item message-item-extra">
+    <span class="dropdown">
+      <strong class="message-user dropdown-toggle" data-toggle="dropdown">
+        <%= message.user.nickname_in_room(room) %>:
+      </strong>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li>
+          <%= link_to mute_user_room_path(room, user_id: message.user), method: :post do %>
+            Mute <strong><%= message.user.nickname_in_room(room) %></strong> in this thread
+          <% end %>
+        </li>
+      </ul>
+    </span>
+    <span><%= message.content %></span>
+  </div>
+<% else %>
+  <div class="message-item">
+    <strong class="message-user"><%= message.user.nickname_in_room(room) %>: </strong><span><%= message.content %></span>
+  </div>
+<% end %>

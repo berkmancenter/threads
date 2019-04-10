@@ -4,18 +4,18 @@
       <div class="col-sm-12">
         <% if can? :toggle_open_topic, @instance %>
           <% unless @instance.closed %>
-            <%= link_to 'Close topic', close_instance_path(@instance), class: 'btn btn-success' %>
+            <%= link_to 'Close topic', close_instance_path(@instance), class: 'btn btn-success', method: :put %>
           <% end %>
           <% if @instance.closed %>
-            <%= link_to 'Open topic', open_instance_path(@instance), class: 'btn btn-success' %>
+            <%= link_to 'Open topic', open_instance_path(@instance), class: 'btn btn-success', method: :put %>
           <% end %>
         <% end %>
         <% if can? :update, @instance %>
           <% unless @instance.private %>
-            <%= link_to 'Make topic private', private_instance_path(@instance), class: 'btn btn-success' %>
+            <%= link_to 'Make topic private', private_instance_path(@instance), class: 'btn btn-success', method: :put %>
           <% end %>
           <% if @instance.private %>
-            <%= link_to 'Make topic not private', unprivate_instance_path(@instance), class: 'btn btn-success' %>
+            <%= link_to 'Make topic not private', unprivate_instance_path(@instance), class: 'btn btn-success', method: :put %>
           <% end %>
           <%= link_to 'Delete topic', instance_path(@instance), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
 

@@ -18,16 +18,16 @@
 <% end %>
 <% if can? :update, room %>
   <div class="dropdown room-item-settings">
-    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
       <%= fa_icon 'bars' %>
     </button>
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <ul class="dropdown-menu">
       <li>
         <% unless room.locked %>
-          <%= link_to 'Lock now', lock_room_path(room) %>
+          <%= link_to 'Lock now', lock_room_path(room), method: :put %>
         <% end %>
         <% if room.locked %>
-          <%= link_to 'Unlock now', unlock_room_path(room) %>
+          <%= link_to 'Unlock now', unlock_room_path(room), method: :put %>
         <% end %>
       </li>
       <% unless room.locked %>
@@ -35,7 +35,7 @@
         <li>
           <% if room.planned_lock %>
             Will lock on <%= room.planned_lock.to_formatted_s(:long_ordinal) %>
-            <%= form_for room, url: cancel_delayed_lock_room_path(room), method: :post do |f| %>
+            <%= form_for room, url: cancel_delayed_lock_room_path(room), method: :put do |f| %>
               <%= f.submit 'Cancel', class: 'btn btn-success' %>
             <% end %>
           <% else %>

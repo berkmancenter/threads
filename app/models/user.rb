@@ -8,11 +8,12 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
-  has_many :messages
+  has_many :messages, dependent: :destroy
   has_many :rooms, through: :messages
   has_and_belongs_to_many :roles
   has_many :room_user_nicknames, dependent: :destroy
-  has_many :moderatorships
+  has_many :moderatorships, dependent: :destroy
+  has_many :muted_room_users, dependent: :destroy
 
   validates :username, presence: true, uniqueness: true, length: { minimum: 3, maximum: 64 }
   validates :email, presence: true, uniqueness: true, format: { with: VALID_EMAIL_REGEX }
@@ -45,6 +46,10 @@ class User < ApplicationRecord
     end
 
     nickname_in_room.nickname
+  end
+
+  def muted_in_room?(room)
+    MutedRoomUser.where(room: room, user: self).any?
   end
 
   private

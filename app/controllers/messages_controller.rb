@@ -5,6 +5,7 @@ class MessagesController < ApplicationController
     room = Room.find(params[:room_id])
 
     return head :not_acceptable if room.locked
+    return head :not_acceptable if current_or_guest_user.muted_in_room?(room)
 
     message = current_or_guest_user.messages.build(message_params.merge(room_id: room_id))
     if message.save

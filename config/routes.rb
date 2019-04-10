@@ -22,28 +22,26 @@ Rails.application.routes.draw do
       get :simple
     end
     member do
-      get :lock
-      get :unlock
       post :set_delayed_lock
-      post :cancel_delayed_lock
+      post :mute_user
+      put :lock
+      put :unlock
+      put :cancel_delayed_lock
     end
   end
 
   resources :instances do
     member do
       get :new_room, to: 'rooms#new'
-      get :close
-      get :open
-      get :private
-      get :unprivate
       post :set_moderators
+      put :close
+      put :open
+      put :private
+      put :unprivate
     end
   end
 
   root to: 'instances#index'
 
   mount ActionCable.server => '/cable'
-
-  require 'sidekiq/web'
-  mount Sidekiq::Web => '/sidekiq'
 end
