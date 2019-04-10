@@ -35,11 +35,11 @@
         <li>
           <% if room.planned_lock %>
             Will lock on <%= room.planned_lock.to_formatted_s(:long_ordinal) %>
-            <%= form_for @room, url: cancel_delayed_lock_room_path(room), method: :post do |f| %>
+            <%= form_for room, url: cancel_delayed_lock_room_path(room), method: :post do |f| %>
               <%= f.submit 'Cancel', class: 'btn btn-success' %>
             <% end %>
           <% else %>
-            <%= form_for @room, url: set_delayed_lock_room_path(room), method: :post do |f| %>
+            <%= form_for room, url: set_delayed_lock_room_path(room), method: :post do |f| %>
               Lock in:
               <input type="text" name="days" placeholder="0"> days
               <input type="text" name="hours" placeholder="0"> hours
