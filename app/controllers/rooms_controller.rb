@@ -1,4 +1,7 @@
 # frozen_string_literal: true
+
+require 'sidekiq/api'
+
 class RoomsController < ApplicationController
   before_action :load_rooms, only: %i[index show simple]
   before_action :load_room, only: %i[show edit update destroy simple]
