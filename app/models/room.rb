@@ -9,4 +9,5 @@ class Room < ApplicationRecord
 
   validates :title, presence: true, length: { maximum: 1000 }
   validates :instance, presence: true
+  validates :title, uniqueness: { scope: :instance }
 end

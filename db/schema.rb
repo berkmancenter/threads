@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_10_180829) do
+ActiveRecord::Schema.define(version: 2019_04_11_122907) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(version: 2019_04_10_180829) do
     t.index ["instance_id"], name: "index_rooms_on_instance_id"
     t.index ["owner_id"], name: "index_rooms_on_owner_id"
     t.index ["room_icon_id"], name: "index_rooms_on_room_icon_id"
+    t.index ["title", "instance_id"], name: "index_rooms_on_title_and_instance_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
