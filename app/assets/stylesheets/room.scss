@@ -14,7 +14,7 @@
   .room-chat-header-title {
     max-width: 600px;
     margin: 0 auto;
-    word-break: break-all;
+    overflow-wrap: break-word;
   }
 
   .message-area {
