@@ -58,8 +58,11 @@ class RoomsController < ApplicationController
   def destroy
     authorize! :destroy, @room
 
+    instance = @room.instance
+
     @room.destroy
-    redirect_to rooms_url, notice: 'Thread has been deleted successfully'
+
+    redirect_to instance, notice: 'Thread has been deleted successfully'
   end
 
   def simple

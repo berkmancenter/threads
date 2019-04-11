@@ -20,6 +20,11 @@
       <%= fa_icon 'bars' %>
     </button>
     <ul class="dropdown-menu">
+      <% if can? :destroy, room %>
+        <li>
+          <%= link_to 'Delete', room_path(room), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </li>
+      <% end %>
       <li>
         <% unless room.locked %>
           <%= link_to 'Lock now', lock_room_path(room), method: :put %>
