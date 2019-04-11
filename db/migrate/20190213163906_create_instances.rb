@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CreateInstances < ActiveRecord::Migration[5.0]
   def change
     create_table :instances, id: false do |t|

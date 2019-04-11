@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CreateUsersNicknamesInRooms < ActiveRecord::Migration[5.0]
   def change
     create_table(:room_user_nicknames) do |t|

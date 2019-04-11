@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 if Rails.env.staging? || Rails.env.production?
   SMTP_SETTINGS = {
     address: ENV['SMTP_ADDRESS'], # example: 'smtp.sendgrid.net'
