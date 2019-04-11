@@ -7,9 +7,7 @@
       <% if room_unread_messages(room) > 0 %>
         | <span class="badge"><%= room_unread_messages(room) %></span> unread
       <% end %>
-      <% if room.messages.first %>
-        | updated <%= time_ago_in_words(room.messages.first.created_at) %> ago
-      <% end %>
+      <%= last_update_info(room) %>
       <% if room.locked %>
         | Locked <%= fa_icon 'lock' %>
       <% end %>
