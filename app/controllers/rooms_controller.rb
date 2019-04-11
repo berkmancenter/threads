@@ -145,8 +145,19 @@ class RoomsController < ApplicationController
     @room = Room.find(params[:id])
     @user = User.find(params[:user_id])
 
-    @room.messages.where(user: @user).destroy_all
+    messages_to_remove = @room.messages.where(user: @user)
+    messages_ids = messages_to_remove.pluck(:id)
+    messages_to_remove.destroy_all
     MutedRoomUser.create!(room: @room, user: @user)
+
+    ActionCable.server.broadcast(
+      "room_#{@room.id}",
+      action: 'muted_user',
+      data: {
+        messages_ids: messages_ids,
+        muted_user_id: @user.id
+      }
+    )
 
     redirect_to request.referer, notice: @user.nickname_in_room(@room) + ' has been muted in this thread'
   end

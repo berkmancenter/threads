@@ -12,14 +12,17 @@ class MessagesController < ApplicationController
       RoomUser.update_last_read_message!(room_id, current_or_guest_user.id, message.id)
       ActionCable.server.broadcast(
         "room_#{room_id}",
-        message: render_to_string(
-          'rooms/_message',
-          locals: {
-            message: message,
-            room: room
-          },
-          layout: false
-        )
+        action: 'new_message',
+        data: {
+          message: render_to_string(
+            'rooms/_message',
+            locals: {
+              message: message,
+              room: room
+            },
+            layout: false
+          )
+        }
       )
       ActionCable.server.broadcast(
         'unread_message',
