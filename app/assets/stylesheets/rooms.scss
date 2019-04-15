@@ -11,16 +11,15 @@
   float: right;
 }
 
+.room-chat-rooms {
+  h2 {
+    margin-top: 0;
+  }
+}
+
 .room-list {
-  .dropdown-menu {
-    padding: 10px;
-
-    a {
-      padding: 3px 5px;
-    }
-
-    hr {
-      margin: 5px 0;
-    }
+  @media (min-width: 768px) {
+    overflow-y: auto;
+    flex-shrink: 1;
   }
 }

@@ -1,10 +1,64 @@
-<%= link_to instance_path(instance), class: 'list-group-item' do %>
-<div class="media instance-item" data-instance-id="<%= instance.id %>">
-  <div class="media-left">
+<%= link_to instance_path(instance), class: "list-group-item instance-item #{ 'instance-item-with-settings' if can_see_settings?(instance) }" do %>
+  <div class="media instance-item" data-instance-id="<%= instance.id %>">
+    <div class="media-left">
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading"><%= instance.title %></h4>
+      <%= instance.rooms.count %> <%= 'thread'.pluralize(instance.rooms.count) %>
+    </div>
   </div>
-  <div class="media-body">
-    <h4 class="media-heading"><%= instance.title %></h4>
-    <%= instance.rooms.count %> <%= 'thread'.pluralize(instance.rooms.count) %>
+<% end %>
+
+<% if can_see_settings?(instance) %>
+  <div class="dropdown instance-item-settings">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+      <%= fa_icon 'bars' %>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right">
+      <% if can? :toggle_open_topic, instance %>
+        <li>
+          <% unless instance.closed %>
+            <%= link_to 'Close topic', close_instance_path(instance), method: :put %>
+          <% end %>
+          <% if instance.closed %>
+            <%= link_to 'Open topic', open_instance_path(instance), method: :put %>
+          <% end %>
+        </li>
+      <% end %>
+      <% if can? :update, instance %>
+        <li>
+          <% unless instance.private %>
+            <%= link_to 'Make topic private', private_instance_path(instance), method: :put %>
+          <% end %>
+          <% if instance.private %>
+            <%= link_to 'Make topic not private', unprivate_instance_path(instance), method: :put %>
+          <% end %>
+        </li>
+        <li>
+          <%= link_to 'Delete topic', instance_path(instance), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </li>
+        <% if instance.private %>
+          <li>
+            <div class="instance-private-url">Private access url: <%= link_to instance_url(instance, access_token: instance.access_token), instance_url(instance, access_token: instance.access_token) %></div>
+          </li>
+        <% end %>
+      <% end %>
+      <% if can? :set_moderators, instance %>
+        <li><hr></li>
+        <li>
+          <div class="instance-select-moderators">
+            <%= form_for instance, url: set_moderators_instance_path(instance), method: :post, html: { class: 'form-horizontal' } do |f| %>
+              <div class="form-group">
+                <div class="col-sm-10">
+                  Select moderators:
+                  <%= f.select :moderators, options_for_select(User.all.reject { |u| u.roles.include?(Role.anonymous) }.collect { |u| [ u.username, u.id ] }, instance.moderators.pluck(:id)), {}, { class: 'fancy-dropdown', multiple: 'multiple' } %>
+                  <%= f.submit 'Save moderators', class: 'btn btn-success' %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
   </div>
-</div>
 <% end %>

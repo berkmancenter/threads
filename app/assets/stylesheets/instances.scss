@@ -1,0 +1,19 @@
+.instances-list {
+  .instance-item-with-settings {
+    width: 90%;
+    display: inline-block;
+  }
+
+  .instance-item-settings {
+    width: 8%;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 15px;
+    float: right;
+  }
+
+  @media (min-width: 768px) {
+    overflow-y: auto;
+    flex-grow: 1;
+  }
+}

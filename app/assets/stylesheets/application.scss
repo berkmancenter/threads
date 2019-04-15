@@ -8,28 +8,4 @@
 @import "font-awesome";
 @import "room";
 @import "rooms";
-
-.login {
-  width: 400px;
-}
-
-.login-form {
-  padding: 20px;
-  margin: 0 auto;
-}
-
-.login-options {
-  margin-top: 10px;
-  a {
-    display: block;
-  }
-}
-
-.room-control {
-  margin-top: 20px;
-  text-align: right;
-}
-
-.section-header {
-  margin: 20px 0;
-}
+@import "instances";

@@ -19,7 +19,7 @@
     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
       <%= fa_icon 'bars' %>
     </button>
-    <ul class="dropdown-menu">
+    <ul class="dropdown-menu dropdown-menu-right">
       <% if can? :destroy, room %>
         <li>
           <%= link_to 'Delete', room_path(room), method: :delete, data: { confirm: 'Are you sure?' } %>

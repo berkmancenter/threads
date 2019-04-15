@@ -35,17 +35,10 @@
       var headerSubtitle = $('.room-chat-header-subtitle').first();
 
       if (!messagesExpanded) {
-        // Ugly fix (but works) to stop removeClass animations play with the
-        // height of the messages container
-        $('head').append(
-          '<style id="expanderCustomCSS">.room-chat-messages { height: 100% !important; }</style>'
-        );
         messagesBox
-          .removeClass('col-sm-6', 600)
-          .addClass('col-sm-12', 600);
-        roomsBox
-          .animate({ width: 'toggle' }, 450)
-          .css('maxHeight', '200px');
+          .removeClass('col-sm-6')
+          .addClass('col-sm-12');
+        roomsBox.hide();
         expander.find('i')
           .removeClass('fa-expand')
           .addClass('fa-compress');
@@ -56,17 +49,10 @@
         headerTitle.text($('.room-item.active .media-heading').text());
         headerSubtitle.hide();
       } else {
-        $('#expanderCustomCSS').remove();
         messagesBox
-          .css('height', 'auto')
-          .addClass('col-sm-6', 300)
-          .removeClass('col-sm-12', 300);
-        setTimeout(function () {
-          roomsBox.animate({ width: 'toggle' }, 450);
-        }, 100);
-        setTimeout(function () {
-          roomsBox.css('maxHeight', 'none');
-        }, 250);
+          .addClass('col-sm-6')
+          .removeClass('col-sm-12');
+        roomsBox.show();
         expander.find('i')
           .addClass('fa-expand')
           .removeClass('fa-compress');
