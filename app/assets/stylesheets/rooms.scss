@@ -21,5 +21,6 @@
   @media (min-width: 768px) {
     overflow-y: auto;
     flex-shrink: 1;
+    min-height: 0;
   }
 }
