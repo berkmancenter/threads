@@ -10,4 +10,11 @@
   hr {
     margin: 5px 0;
   }
+
+  /* To force Firefox to render it properly... */
+  input {
+    &[type=text] {
+      width: 100%;
+    }
+  }
 }
