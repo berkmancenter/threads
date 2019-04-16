@@ -1,6 +1,5 @@
-<%= link_to room_path(room, access_token: params[:access_token].present? ? params[:access_token]:nil), class: "#{ 'room-item-with-settings' if can? :update, room } room-item list-group-item #{ 'active' if room.id == (params[:id].to_i) && params[:controller] == 'rooms' }" do %>
+<%= link_to room_path(room, access_token: params[:access_token].present? ? params[:access_token]:nil), class: "room-item list-group-item #{ 'active' if room.id == (params[:id].to_i) && params[:controller] == 'rooms' }" do %>
   <div class="media" data-room-id="<%= room.id %>">
-    <div class="media-left"></div>
     <div class="media-body">
       <h4 class="media-heading"><%= room.title %></h4>
       <span class="room-item-replies"><%= room.messages.count %> <%= 'reply'.pluralize(room.messages.count) %></span>
@@ -12,13 +11,17 @@
         | Locked <%= fa_icon 'lock' %>
       <% end %>
     </div>
+    <% if can? :update, room %>
+      <div class="media-right">
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" data-target="#dropdown-<%= room.id %>">
+          <%= fa_icon 'bars' %>
+        </button>
+      </div>
+    <% end %>
   </div>
 <% end %>
 <% if can? :update, room %>
-  <div class="dropdown room-item-settings">
-    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-      <%= fa_icon 'bars' %>
-    </button>
+  <div id="dropdown-<%= room.id %>" class="dropdown">
     <ul class="dropdown-menu dropdown-menu-right">
       <% if can? :destroy, room %>
         <li>
