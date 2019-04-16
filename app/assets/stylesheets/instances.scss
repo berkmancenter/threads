@@ -1,12 +1,11 @@
 .instances-list {
-  .instance-item-with-settings {
-    width: 90%;
-    display: inline-block;
-  }
-
   @media (min-width: 768px) {
     overflow-y: auto;
     overflow-x: hidden;
     flex-grow: 1;
+  }
+
+  .instance-private-url {
+    overflow-wrap: break-word;
   }
 }
