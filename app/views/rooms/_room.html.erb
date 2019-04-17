@@ -1,25 +1,3 @@
-<%= link_to room_path(room, access_token: params[:access_token].present? ? params[:access_token]:nil), class: "room-item list-group-item #{ 'active' if room.id == (params[:id].to_i) && params[:controller] == 'rooms' }" do %>
-  <div class="media" data-room-id="<%= room.id %>">
-    <div class="media-body">
-      <h4 class="media-heading"><%= room.title %></h4>
-      <span class="room-item-replies"><%= room.messages.count %> <%= 'reply'.pluralize(room.messages.count) %></span>
-      <% if room_unread_messages(room) > 0 %>
-        | <span class="badge"><%= room_unread_messages(room) %></span> unread
-      <% end %>
-      <%= last_update_info(room) %>
-      <% if room.locked %>
-        | Locked <%= fa_icon 'lock' %>
-      <% end %>
-    </div>
-    <% if can? :update, room %>
-      <div class="media-right">
-        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" data-target="#dropdown-<%= room.id %>">
-          <%= fa_icon 'bars' %>
-        </button>
-      </div>
-    <% end %>
-  </div>
-<% end %>
 <% if can? :update, room %>
   <div id="dropdown-<%= room.id %>" class="dropdown">
     <ul class="dropdown-menu dropdown-menu-right">
@@ -57,5 +35,28 @@
         </li>
       <% end %>
     </ul>
+  </div>
+<% end %>
+
+<%= link_to room_path(room, access_token: params[:access_token].present? ? params[:access_token]:nil), class: "room-item list-group-item #{ 'active' if room.id == (params[:id].to_i) && params[:controller] == 'rooms' }" do %>
+  <div class="media" data-room-id="<%= room.id %>">
+    <div class="media-body">
+      <h4 class="media-heading"><%= room.title %></h4>
+      <span class="room-item-replies"><%= room.messages.count %> <%= 'reply'.pluralize(room.messages.count) %></span>
+      <% if room_unread_messages(room) > 0 %>
+        | <span class="badge"><%= room_unread_messages(room) %></span> unread
+      <% end %>
+      <%= last_update_info(room) %>
+      <% if room.locked %>
+        | Locked <%= fa_icon 'lock' %>
+      <% end %>
+    </div>
+    <% if can? :update, room %>
+      <div class="media-right">
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" data-target="#dropdown-<%= room.id %>">
+          <%= fa_icon 'bars' %>
+        </button>
+      </div>
+    <% end %>
   </div>
 <% end %>

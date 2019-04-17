@@ -1,18 +1,3 @@
-<%= link_to instance_path(instance), class: 'list-group-item instance-item' do %>
-  <div class="media instance-item" data-instance-id="<%= instance.id %>">
-    <div class="media-body">
-      <h4 class="media-heading"><%= instance.title %></h4>
-      <%= instance.rooms.count %> <%= 'thread'.pluralize(instance.rooms.count) %>
-    </div>
-    <% if can_see_settings?(instance) %>
-      <div class="media-right">
-        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" data-target="#dropdown-<%= instance.id %>">
-          <%= fa_icon 'bars' %>
-        </button>
-      </div>
-    <% end %>
-  </div>
-<% end %>
 <% if can_see_settings?(instance) %>
   <div id="dropdown-<%= instance.id %>" class="dropdown instance-item-settings">
     <ul class="dropdown-menu dropdown-menu-right">
@@ -64,5 +49,21 @@
         </li>
       <% end %>
     </ul>
+  </div>
+<% end %>
+
+<%= link_to instance_path(instance), class: 'list-group-item instance-item' do %>
+  <div class="media instance-item" data-instance-id="<%= instance.id %>">
+    <div class="media-body">
+      <h4 class="media-heading"><%= instance.title %></h4>
+      <%= instance.rooms.count %> <%= 'thread'.pluralize(instance.rooms.count) %>
+    </div>
+    <% if can_see_settings?(instance) %>
+      <div class="media-right">
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" data-target="#dropdown-<%= instance.id %>">
+          <%= fa_icon 'bars' %>
+        </button>
+      </div>
+    <% end %>
   </div>
 <% end %>
