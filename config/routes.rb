@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       put :open
       put :private
       put :unprivate
+      get :export
     end
   end
 

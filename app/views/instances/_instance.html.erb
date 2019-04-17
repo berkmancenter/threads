@@ -19,24 +19,27 @@
       <% if can? :toggle_open_topic, instance %>
         <li>
           <% unless instance.closed %>
-            <%= link_to 'Close topic', close_instance_path(instance), method: :put %>
+            <%= link_to 'Close', close_instance_path(instance), method: :put %>
           <% end %>
           <% if instance.closed %>
-            <%= link_to 'Open topic', open_instance_path(instance), method: :put %>
+            <%= link_to 'Open', open_instance_path(instance), method: :put %>
           <% end %>
         </li>
       <% end %>
       <% if can? :update, instance %>
         <li>
           <% unless instance.private %>
-            <%= link_to 'Make topic private', private_instance_path(instance), method: :put %>
+            <%= link_to 'Make private', private_instance_path(instance), method: :put %>
           <% end %>
           <% if instance.private %>
-            <%= link_to 'Make topic not private', unprivate_instance_path(instance), method: :put %>
+            <%= link_to 'Make not private', unprivate_instance_path(instance), method: :put %>
           <% end %>
         </li>
         <li>
-          <%= link_to 'Delete topic', instance_path(instance), method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Delete', instance_path(instance), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </li>
+        <li>
+          <%= link_to 'Export', export_instance_path(instance) %>
         </li>
         <% if instance.private %>
           <li>

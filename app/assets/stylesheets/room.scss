@@ -32,6 +32,7 @@
     &.message-area-editor {
       .dropdown-menu {
         visibility: visible;
+        max-width: none;
       }
 
       .message-item {
