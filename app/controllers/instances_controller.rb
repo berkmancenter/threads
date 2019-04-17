@@ -119,7 +119,7 @@ class InstancesController < ApplicationController
                                 &.to_formatted_s(:long_ordinal)
 
       content += "#{room.title} "
-      content += "(#{room.messages.count} replies"
+      content += "(#{room.messages.count} #{'reply'.pluralize(room.messages.count)}"
       content += " / last update #{latest_message_date}" if latest_message_date
       content += ")\n"
 
