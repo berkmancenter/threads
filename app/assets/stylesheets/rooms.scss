@@ -11,4 +11,10 @@
     min-height: 0;
     padding-right: 5px;
   }
+
+  .room-item {
+    .media-right {
+      vertical-align: middle;
+    }
+  }
 }

@@ -8,4 +8,10 @@
   .instance-private-url {
     overflow-wrap: break-word;
   }
+
+  .instance-item {
+    .media-right {
+      vertical-align: middle;
+    }
+  }
 }
