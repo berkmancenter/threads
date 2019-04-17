@@ -3,7 +3,7 @@ require 'sidekiq/api'
 
 class RoomsController < ApplicationController
   before_action :load_rooms, only: %i[index show simple]
-  before_action :load_room, only: %i[show edit update destroy simple]
+  before_action :load_room, except: %i[new create]
 
   def index; end
 
@@ -73,8 +73,6 @@ class RoomsController < ApplicationController
   end
 
   def lock
-    @room = Room.find(params[:id])
-
     authorize! :update, @room
 
     if @room.update_attributes(locked: true)
@@ -85,8 +83,6 @@ class RoomsController < ApplicationController
   end
 
   def unlock
-    @room = Room.find(params[:id])
-
     authorize! :update, @room
 
     if @room.update_attributes(locked: false)
@@ -97,15 +93,13 @@ class RoomsController < ApplicationController
   end
 
   def set_delayed_lock
-    @room = Room.find(params[:id])
+    authorize! :update, @room
 
     if @room.locked
       redirect_to request.referer,
                   notice: 'Can\'t set a delayed lock on a locked thread'
       return
     end
-
-    authorize! :update, @room
 
     lock_date = Time.now +
                 params[:days].to_i.days +
@@ -128,8 +122,6 @@ class RoomsController < ApplicationController
   end
 
   def cancel_delayed_lock
-    @room = Room.find(params[:id])
-
     @room.update_attributes!(planned_lock: nil)
 
     # Cleaning exisiting jobs
@@ -144,7 +136,6 @@ class RoomsController < ApplicationController
   end
 
   def mute_user
-    @room = Room.find(params[:id])
     @user = User.find(params[:user_id])
 
     messages_to_remove = @room.messages.where(user: @user)

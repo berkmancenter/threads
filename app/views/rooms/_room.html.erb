@@ -11,7 +11,7 @@
           <%= link_to 'Lock now', lock_room_path(room), method: :put %>
         <% end %>
         <% if room.locked %>
-          <%= link_to 'Unlock now', unlock_room_path(room), method: :put %>
+          <%= link_to 'Unlock', unlock_room_path(room), method: :put %>
         <% end %>
       </li>
       <% unless room.locked %>
