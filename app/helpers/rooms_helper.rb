@@ -6,4 +6,9 @@ module RoomsHelper
       "| updated #{time_ago_in_words(latest_message.created_at)} ago"
     end
   end
+
+  def room_unread_messages(room)
+    num = RoomUser.unread_message_count(room.id, current_or_guest_user.id)
+    num.positive? ? num : 0
+  end
 end
