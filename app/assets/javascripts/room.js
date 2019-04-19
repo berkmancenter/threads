@@ -64,7 +64,19 @@
         headerSubtitle.show();
       }
 
+      setRoomTitleExpander();
+
       messagesExpanded = !messagesExpanded;
     });
+  }
+
+  function setRoomTitleExpander () {
+    var titleBox = $('.room-chat-header-title').first();
+
+    if (titleBox[0].scrollHeight > 200) {
+      titleBox.addClass('room-chat-header-title-long');
+    } else {
+      titleBox.removeClass('room-chat-header-title-long');
+    }
   }
 })();
