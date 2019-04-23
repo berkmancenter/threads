@@ -33,6 +33,7 @@
       var messagesBox = $('.room-chat-messages').first();
       var headerTitle = $('.room-chat-header-title').first();
       var headerSubtitle = $('.room-chat-header-subtitle').first();
+      var activeTitle = $('.room-item.active .media-heading').text();
 
       if (!messagesExpanded) {
         messagesBox
@@ -46,7 +47,8 @@
           'title',
           'Click to show the threads list'
         );
-        headerTitle.text($('.room-item.active .media-heading').text());
+        headerTitle.text(activeTitle)
+          .attr('title', activeTitle);
         headerSubtitle.hide();
       } else {
         messagesBox
