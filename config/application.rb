@@ -25,7 +25,9 @@ module Threads
                                routing_specs: false,
                                intergration_pool: false,
                                fixture: true
+    end
 
+    if ENV['LOG_TO_STDOUT'].present?
       logger           = ActiveSupport::Logger.new(STDOUT)
       logger.formatter = config.log_formatter
       config.log_tags  = [:subdomain, :uuid]
