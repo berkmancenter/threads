@@ -34,7 +34,6 @@
     }
 
     $messageArea.append(data.message);
-    $messageForm.val('');
 
     if (goDown === true) {
       scrollToBottom($messageArea);

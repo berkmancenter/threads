@@ -20,6 +20,7 @@
       if (e.keyCode == 13 && !e.shiftKey) {
         e.preventDefault();
         $('form#new_message').submit();
+        $messageForm.val('');
       }
     });
   }
