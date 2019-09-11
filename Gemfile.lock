@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/faker-ruby/faker.git
+  revision: 2184a2e61c2f19d243a20645cad74eabc0a6fe55
+  branch: master
+  specs:
+    faker (2.2.2)
+      i18n (~> 1.6.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -116,8 +124,6 @@ GEM
     factory_girl_rails (4.9.0)
       factory_girl (~> 4.9.0)
       railties (>= 3.0.0)
-    faker (2.2.2)
-      i18n (~> 1.6.0)
     ffi (1.10.0)
     font-awesome-rails (4.7.0.4)
       railties (>= 3.2, < 6.0)
@@ -370,7 +376,7 @@ DEPENDENCIES
   dotenv-rails
   enumerize
   factory_girl_rails
-  faker
+  faker!
   font-awesome-rails (~> 4.7)
   jquery-rails
   listen (~> 3.0.5)

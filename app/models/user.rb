@@ -33,7 +33,15 @@ class User < ApplicationRecord
     return nickname_in_room.nickname unless nickname_in_room.nil?
 
     nickname_in_room = loop do
-      nickname = Faker::Superhero.name
+      nickname = [
+        Faker::Space.planet,
+        Faker::Space.moon,
+        Faker::Space.galaxy,
+        Faker::Space.star,
+        Faker::TvShows::Stargate.planet,
+        Faker::Movies::StarWars.planet,
+        Faker::Games::Witcher.location
+      ].sample
 
       break RoomUserNickname.create!(
         user: self,
@@ -41,7 +49,7 @@ class User < ApplicationRecord
         room: room
       ) unless RoomUserNickname.exists?(
         room: room,
-        nickname: Faker::Superhero.name
+        nickname: nickname
       )
     end
 
