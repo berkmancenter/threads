@@ -24,6 +24,7 @@ class User < ApplicationRecord
 
   def nickname_in_room(room)
     return 'OP' if room.owner_id == id
+    return ENV['VICTORIOUSBORN_NICKNAME'] if ENV['VICTORIOUSBORN_NICKNAME'].present? && username == 'victoriousBorn'
 
     nickname_in_room = RoomUserNickname.where(
       room: room,
