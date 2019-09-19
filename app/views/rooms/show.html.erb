@@ -15,7 +15,7 @@
 
         <div class="message-area<%= ' message-area-editor' if can?(:update, @room) %>">
           <% @messages.each do |message| %>
-            <%= render 'rooms/message', message: message, room: @room %>
+            <%= render 'messages/message', message: message, room: @room %>
           <% end %>
         </div>
 

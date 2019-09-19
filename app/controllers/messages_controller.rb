@@ -15,7 +15,7 @@ class MessagesController < ApplicationController
         action: 'new_message',
         data: {
           message: render_to_string(
-            'rooms/_message',
+            'messages/_message',
             locals: {
               message: message,
               room: room

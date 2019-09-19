@@ -63,6 +63,13 @@
             cursor: pointer;
           }
         }
+
+        &.message-item-muted {
+          .message-user,
+          .message-content {
+            opacity: 0.5;
+          }
+        }
       }
     }
 

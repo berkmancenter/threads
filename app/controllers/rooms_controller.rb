@@ -2,7 +2,7 @@
 require 'sidekiq/api'
 
 class RoomsController < ApplicationController
-  before_action :load_rooms, only: %i[index show simple]
+  before_action :load_rooms, only: %i[index show simple messages]
   before_action :load_room, except: %i[new create]
 
   def index; end
@@ -13,7 +13,8 @@ class RoomsController < ApplicationController
     authorize! :read, @room
 
     @message = Message.new
-    @messages = @room.messages.order(:created_at)
+    @messages = room_messages
+
     RoomUser.create_or_update!(@room.id, current_or_guest_user.id, @messages&.last&.id)
   end
 
@@ -138,21 +139,39 @@ class RoomsController < ApplicationController
   def mute_user
     @user = User.find(params[:user_id])
 
-    messages_to_remove = @room.messages.where(user: @user)
-    messages_ids = messages_to_remove.pluck(:id)
-    messages_to_remove.destroy_all
     MutedRoomUser.create!(room: @room, user: @user)
 
     ActionCable.server.broadcast(
       "room_#{@room.id}",
       action: 'muted_user',
       data: {
-        messages_ids: messages_ids,
         muted_user_id: @user.id
       }
     )
 
     redirect_to request.referer, notice: @user.nickname_in_room(@room) + ' has been muted in this thread'
+  end
+
+  def unmute_user
+    @user = User.find(params[:user_id])
+
+    MutedRoomUser.where(room: @room, user: @user).destroy_all
+
+    ActionCable.server.broadcast(
+      "room_#{@room.id}",
+      action: 'unmuted_user',
+      data: {
+        unmuted_user_id: @user.id
+      }
+    )
+
+    redirect_to request.referer, notice: @user.nickname_in_room(@room) + ' has been unmuted in this thread'
+  end
+
+  def messages
+    authorize! :read, @room
+
+    render room_messages, locals: { room: @room }
   end
 
   private
@@ -168,5 +187,13 @@ class RoomsController < ApplicationController
 
   def load_room
     @room = Room.find(params[:id])
+  end
+
+  def room_messages
+    if can?(:update, @room)
+      @room.messages.order(:created_at)
+    else
+      Message.not_muted(@room.id).order(:created_at)
+    end
   end
 end

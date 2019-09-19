@@ -31,7 +31,7 @@ class Ability
         room.instance.private == false || room.instance.access_token == params[:access_token] || [room.instance.owner, room.owner].include?(user)
       end
       can :update, Room do |room|
-        user == room.instance.owner || room.instance.moderators.include?(user)
+        [room.instance.owner, room.owner].include?(user) || room.instance.moderators.include?(user)
       end
       can :destroy, Room do |room|
         [room.instance.owner, room.owner].include?(user)

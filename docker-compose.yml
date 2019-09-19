@@ -29,6 +29,7 @@ services:
 
   cable:
     depends_on:
+      - 'postgres'
       - 'redis'
     build: .
     command: puma -p 28080 cable/config.ru

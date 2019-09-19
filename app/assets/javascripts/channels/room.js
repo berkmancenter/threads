@@ -20,6 +20,11 @@
           muteMutedUser(data.data);
 
           break;
+        case 'unmuted_user':
+          reloadMessages();
+          unmuteMutedUser(data.data);
+
+          break;
         default:
 
       }
@@ -41,13 +46,7 @@
   }
 
   function removeMessagesOfMutedUser (data) {
-    var selectors = [];
-
-    $(data.messages_ids).each(function (index, messageId) {
-      selectors.push(`.message-area .message-item[data-message-id='${messageId}']`);
-    });
-
-    $(selectors.join(',')).remove();
+    $(`.message-area .message-item[data-user-id='${data.muted_user_id}']`).remove();
   }
 
   function muteMutedUser (data) {
@@ -55,5 +54,21 @@
       $messageForm.prop('disabled', true);
       $messageForm.val('You\'ve been muted in this thread and can\'t post any new messages');
     }
+  }
+
+  function unmuteMutedUser (data) {
+    if (data.unmuted_user_id === parseInt(userId)) {
+      $messageForm.prop('disabled', false);
+      $messageForm.val('');
+    }
+  }
+
+  function reloadMessages (data) {
+    $.get(`/rooms/${roomId}/messages`, {
+      access_token: $('#access-token').val()
+    }, function (data) {
+      var list = $('.message-area').first();
+      list.html(data);
+    })
   }
 })();

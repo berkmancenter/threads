@@ -11,6 +11,14 @@ class Message < ApplicationRecord
     query
   }
 
+  scope :not_muted, ->(room_id) {
+    query = where(room_id: room_id)
+    query = query.where.not(
+      user_id: MutedRoomUser.where(room_id: room_id).pluck(:user_id)
+    )
+    query
+  }
+
   def author
     user.username
   end

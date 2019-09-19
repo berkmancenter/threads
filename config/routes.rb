@@ -24,9 +24,11 @@ Rails.application.routes.draw do
     member do
       post :set_delayed_lock
       post :mute_user
+      post :unmute_user
       put :lock
       put :unlock
       put :cancel_delayed_lock
+      get :messages
     end
   end
 
