@@ -13,12 +13,11 @@ class RoomUser < ApplicationRecord
     end
   end
 
-  def self.unread_message_count(room_id, user_id)
-    item = find_by(room_id: room_id, user_id: user_id)
+  def self.unread_message_count(room, user_id)
+    item = find_by(room: room, user_id: user_id)
     if item.present?
-      Message.unread_by_room_user(room_id, item&.last_read_message_id).size
+      Message.unread_by_room_user(room.id, item&.last_read_message_id).size
     else
-      room = Room.find(room_id)
       room.messages.size
     end
   end

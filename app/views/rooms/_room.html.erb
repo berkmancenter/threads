@@ -42,7 +42,7 @@
   <div class="media" data-room-id="<%= room.id %>">
     <div class="media-body">
       <h4 class="media-heading"><%= room.title %></h4>
-      <span class="room-item-replies"><%= room.messages.count %> <%= 'reply'.pluralize(room.messages.count) %></span>
+      <span class="room-item-replies"><%= room.messages.size %> <%= 'reply'.pluralize(room.messages.size) %></span>
       <% if room_unread_messages(room) > 0 %>
         | <span class="badge"><%= room_unread_messages(room) %></span> unread
       <% end %>

@@ -3,7 +3,9 @@ class InstancesController < ApplicationController
   before_action :load_instance, except: %i[index new create]
 
   def index
-    @instances = Instance.all_for_user(current_or_guest_user)
+    @instances = Instance.includes(%i[moderatorships moderators])
+                         .all_for_user(current_or_guest_user)
+    @users_all = User.not_anonymous
   end
 
   def show

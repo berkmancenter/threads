@@ -8,7 +8,7 @@ module RoomsHelper
   end
 
   def room_unread_messages(room)
-    num = RoomUser.unread_message_count(room.id, current_or_guest_user.id)
+    num = RoomUser.unread_message_count(room, current_or_guest_user.id)
     num.positive? ? num : 0
   end
 end

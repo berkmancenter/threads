@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class Message < ApplicationRecord
   belongs_to :user
-  belongs_to :room
+  belongs_to :room, counter_cache: true
 
   validates :content, presence: true, length: { maximum: 4000 }
 

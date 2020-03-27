@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_11_122907) do
+ActiveRecord::Schema.define(version: 2020_03_27_175457) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2019_04_11_122907) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "access_token"
+    t.integer "rooms_count"
     t.index ["owner_id"], name: "index_instances_on_owner_id"
   end
 
@@ -91,6 +92,7 @@ ActiveRecord::Schema.define(version: 2019_04_11_122907) do
     t.integer "instance_id"
     t.boolean "locked", default: false
     t.datetime "planned_lock"
+    t.integer "messages_count"
     t.index ["instance_id"], name: "index_rooms_on_instance_id"
     t.index ["owner_id"], name: "index_rooms_on_owner_id"
     t.index ["room_icon_id"], name: "index_rooms_on_room_icon_id"

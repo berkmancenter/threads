@@ -186,12 +186,12 @@ class RoomsController < ApplicationController
   end
 
   def load_room
-    @room = Room.find(params[:id])
+    @room = Room.includes(:messages).find(params[:id])
   end
 
   def room_messages
     if can?(:update, @room)
-      @room.messages.order(:created_at)
+      @room.messages.includes(:user).order(:created_at)
     else
       Message.not_muted(@room.id).order(:created_at)
     end
