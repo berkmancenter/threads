@@ -26,35 +26,10 @@ class User < ApplicationRecord
 
   def nickname_in_room(room)
     return 'OP' if room.owner_id == id
-    return ENV['VICTORIOUSBORN_NICKNAME'] if ENV['VICTORIOUSBORN_NICKNAME'].present? && username == 'victoriousBorn'
 
-    @room_user_nicknames ||= RoomUserNickname.includes(:user).where(room: room)
-    nickname_in_room = @room_user_nicknames.find { |room_user_nickname| room_user_nickname.user == self }
+    create_unique_username if self.username.include?('guest_')
 
-    return nickname_in_room.nickname unless nickname_in_room.nil?
-
-    nickname_in_room = loop do
-      nickname = [
-        Faker::Space.planet,
-        Faker::Space.moon,
-        Faker::Space.galaxy,
-        Faker::Space.star,
-        Faker::TvShows::Stargate.planet,
-        Faker::Movies::StarWars.planet,
-        Faker::Games::Witcher.location
-      ].sample
-
-      break RoomUserNickname.create!(
-        user: self,
-        nickname: nickname,
-        room: room
-      ) unless RoomUserNickname.exists?(
-        room: room,
-        nickname: nickname
-      )
-    end
-
-    nickname_in_room.nickname
+    username
   end
 
   def muted_in_room?(room)
@@ -69,5 +44,25 @@ class User < ApplicationRecord
     unless roles.include?(Role.anonymous)
       roles << Role.registered
     end
+  end
+
+  def create_unique_username
+    new_username = loop do
+      nickname = [
+        Faker::Space.planet,
+        Faker::Space.moon,
+        Faker::Space.galaxy,
+        Faker::Space.star,
+        Faker::TvShows::Stargate.planet,
+        Faker::Movies::StarWars.planet,
+        Faker::Games::Witcher.location
+      ].sample
+
+      break nickname unless User.exists?(username: nickname) &&
+                            nickname.length > 3
+    end
+
+    self.username = new_username
+    self.save!
   end
 end
