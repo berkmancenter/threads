@@ -9,7 +9,7 @@ Threads is a simple, anonymous discussion tool.
 ### Stack
 
 * Ruby on Rails 5.2
-* Ruby 2.4.1
+* Ruby >= 2.5
 * Puma
 * Redis
 * Postgresql 9.6.x

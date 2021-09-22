@@ -55,7 +55,11 @@ class User < ApplicationRecord
         Faker::Space.star,
         Faker::TvShows::Stargate.planet,
         Faker::Movies::StarWars.planet,
-        Faker::Games::Witcher.location
+        Faker::Games::Witcher.location,
+        Faker::Games::WarhammerFantasy.heros,
+        Faker::Games::WarhammerFantasy.creatures,
+        Faker::Games::Touhou.characters,
+        Faker::Fantasy::Tolkien.characters
       ].sample
 
       break nickname unless User.exists?(username: nickname) &&
