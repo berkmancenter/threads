@@ -2,7 +2,9 @@
 
 ## Description
 
-Threads is a simple, anonymous discussion tool.
+**Threads** is a simple anonymous discussion tool.  
+
+To discuss current or potential uses, see our new [Threads forum](https://github.com/berkmancenter/threads/discussions). 
 
 ## Dev environment
 
