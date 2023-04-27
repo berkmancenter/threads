@@ -1,48 +1,74 @@
 (function () {
   var roomId = $('#room-id').val();
-  if (!roomId) return;
+  var userId = $('#user-id').val();
+  if (!roomId) {
+    return;
+  }
 
   var $messageArea = $('.message-area');
   var $messageForm = $('.message-form textarea');
 
-  App.room = App.cable.subscriptions.create({channel: 'RoomChannel', room_id: roomId}, {
+  App.room = App.cable.subscriptions.create({ channel: 'RoomChannel', room_id: roomId }, {
     received: function (data) {
-      let goDown = false;
+      switch (data.action) {
+        case 'new_message':
+          addNewMessage(data.data);
 
-      if($messageArea.scrollTop() + $messageArea.innerHeight() >= $messageArea[0].scrollHeight) {
-        goDown = true;
+          break;
+        case 'muted_user':
+          removeMessagesOfMutedUser(data.data);
+          muteMutedUser(data.data);
+
+          break;
+        case 'unmuted_user':
+          reloadMessages();
+          unmuteMutedUser(data.data);
+
+          break;
+        default:
+
       }
+    }
+  });
 
-      $messageArea.append(this.renderMessage(data));
+  function addNewMessage (data) {
+    let goDown = false;
+
+    if($messageArea.scrollTop() + $messageArea.innerHeight() >= $messageArea[0].scrollHeight) {
+      goDown = true;
+    }
+
+    $messageArea.append(data.message);
+
+    if (goDown === true) {
+      scrollToBottom($messageArea);
+    }
+  }
+
+  function removeMessagesOfMutedUser (data) {
+    $(`.message-area .message-item[data-user-id='${data.muted_user_id}']`).remove();
+  }
+
+  function muteMutedUser (data) {
+    if (data.muted_user_id === parseInt(userId)) {
+      $messageForm.prop('disabled', true);
+      $messageForm.val('You\'ve been muted in this thread and can\'t post any new messages');
+    }
+  }
+
+  function unmuteMutedUser (data) {
+    if (data.unmuted_user_id === parseInt(userId)) {
+      $messageForm.prop('disabled', false);
       $messageForm.val('');
-
-      if (goDown === true) {
-        scrollToBottom();
-      }
-    },
-    renderMessage: function (data) { return messageItemTmpl(data.username, data.content); }
-  });
-
-  $(function () {
-    scrollToBottom();
-    onEnterMessageform();
-  });
-
-  function scrollToBottom () {
-    $messageArea.scrollTop($messageArea[0].scrollHeight);
+    }
   }
 
-  function onEnterMessageform () {
-    $messageForm.on('keydown', function (e) {
-      if (!this.value || !this.value.trim()) return;
-      if (e.keyCode == 13 && !e.shiftKey) {
-        e.preventDefault();
-        $('form#new_message').submit();
-      }
-    });
-  }
-
-  function messageItemTmpl(user, message) {
-    return '<div class="message-item"><strong class="message-user">'+ user +': </strong><span>'+ message +'</span></div>'
+  function reloadMessages (data) {
+    $.get(`/rooms/${roomId}/messages`, {
+      access_token: $('#access-token').val()
+    }, function (data) {
+      var list = $('.message-area').first();
+      list.html(data);
+    })
   }
 })();

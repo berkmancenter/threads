@@ -84,7 +84,6 @@ Rails.application.configure do
 
   # Mailer settings
   config.action_mailer.delivery_method = ENV['MAILER_DELIVERY_METHOD']&.to_sym || :smtp
-  config.action_mailer.smtp_settings = SMTP_SETTINGS
   config.action_mailer.default_url_options = {
     host: (ENV['EMAIL_DOMAIN'] || 'example.com')
   }
@@ -92,4 +91,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.assets.js_compressor = Uglifier.new(harmony: true)
 end
+

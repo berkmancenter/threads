@@ -1,0 +1,22 @@
+.instances-list {
+  @media (min-width: 768px) {
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-grow: 1;
+  }
+
+  .instance-private-url {
+    overflow-wrap: break-word;
+  }
+
+  .instance-item {
+    .media-right {
+      vertical-align: middle;
+    }
+
+    &:nth-of-type(1) {
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+    }
+  }
+}

@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 class InstancesController < ApplicationController
+  before_action :load_instance, except: %i[index new create]
+
   def index
-    @instances = Instance.all_for_user(current_or_guest_user)
+    @instances = Instance.includes(%i[moderatorships moderators])
+                         .all_for_user(current_or_guest_user)
+    @users_all = User.not_anonymous
   end
 
   def show
-    @instance = Instance.find(params[:id])
-
     authorize! :read, @instance
   end
 
@@ -28,14 +30,10 @@ class InstancesController < ApplicationController
   end
 
   def edit
-    @instance = Instance.find(params[:id])
-
     authorize! :update, @instance
   end
 
   def update
-    @instance = Instance.find(params[:id])
-
     authorize! :update, @instance
 
     if @instance.update_attributes(instance_params)
@@ -46,8 +44,6 @@ class InstancesController < ApplicationController
   end
 
   def destroy
-    @instance = Instance.find(params[:id])
-
     authorize! :destroy, @instance
 
     @instance.destroy
@@ -55,8 +51,6 @@ class InstancesController < ApplicationController
   end
 
   def close
-    @instance = Instance.find(params[:id])
-
     authorize! :toggle_open_topic, @instance
 
     if @instance.update_attributes(closed: true)
@@ -67,8 +61,6 @@ class InstancesController < ApplicationController
   end
 
   def open
-    @instance = Instance.find(params[:id])
-
     authorize! :toggle_open_topic, @instance
 
     if @instance.update_attributes(closed: false)
@@ -79,8 +71,6 @@ class InstancesController < ApplicationController
   end
 
   def private
-    @instance = Instance.find(params[:id])
-
     authorize! :update, @instance
 
     if @instance.update_attributes(private: true)
@@ -91,8 +81,6 @@ class InstancesController < ApplicationController
   end
 
   def unprivate
-    @instance = Instance.find(params[:id])
-
     authorize! :update, @instance
 
     if @instance.update_attributes(private: false)
@@ -103,8 +91,6 @@ class InstancesController < ApplicationController
   end
 
   def set_moderators
-    @instance = Instance.find(params[:id])
-
     authorize! :set_moderators, @instance
 
     users = User.where(id: params[:instance][:moderators])
@@ -122,9 +108,45 @@ class InstancesController < ApplicationController
     end
   end
 
+  def export
+    content = ''
+
+    content += @instance.title
+
+    @instance.rooms_sorted_by_last_message.each do |room|
+      latest_message_date = room.messages
+                                .order(:created_at)
+                                .last
+                                &.created_at
+                                &.to_formatted_s(:long_ordinal)
+
+      content += "#{room.title} "
+      content += "(#{room.messages.count} #{'reply'.pluralize(room.messages.count)}"
+      content += " / last update #{latest_message_date}" if latest_message_date
+      content += ")\n"
+
+      room.messages.order(:created_at).each do |message|
+        message_content = message.content.delete("\r\n\\")
+        content += "#{message.user.nickname_in_room(room)}: #{message_content}"
+        content += "\n"
+      end
+
+      content += "\n"
+    end
+
+    filename = @instance.title.tr(' ', '_')
+    send_data content,
+              type: 'text',
+              disposition: "attachment; filename=#{filename}_export.txt"
+  end
+
   private
 
   def instance_params
     params.require(:instance).permit(:title, :closed, :private, :moderators)
+  end
+
+  def load_instance
+    @instance = Instance.find(params[:id])
   end
 end

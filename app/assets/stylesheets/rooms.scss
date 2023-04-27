@@ -1,0 +1,25 @@
+.room-chat-rooms {
+  h2 {
+    margin-top: 0;
+  }
+}
+
+.room-list {
+  @media (min-width: 768px) {
+    overflow-y: auto;
+    flex: 1 1 auto;
+    min-height: 0;
+    padding-right: 5px;
+  }
+
+  .room-item {
+    .media-right {
+      vertical-align: middle;
+    }
+
+    &:nth-of-type(1) {
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+    }
+  }
+}

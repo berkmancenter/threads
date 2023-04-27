@@ -1,10 +1,5 @@
 # frozen_string_literal: true
 module ApplicationHelper
-  def room_unread_messages(room)
-    num = RoomUser.unread_message_count(room.id, current_or_guest_user.id)
-    num.positive? ? num : 0
-  end
-
   def flash_class(level)
     case level
     when 'notice' then 'alert alert-info'

@@ -12,13 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap/dropdown
+//= require bootstrap
 //= require select2
 //= require_tree .
 //= require_tree ./channels
-
-$(function () {
-  $('.fancy-dropdown').select2({
-    theme: 'bootstrap'
-  });
-});
+//= require_tree ./vendor

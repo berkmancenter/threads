@@ -1,16 +1,62 @@
-<%= link_to room_path(room, access_token: params[:access_token].present? ? params[:access_token]:nil), class: "list-group-item #{ 'active' if room.id == (params[:id].to_i) && params[:controller] == 'rooms' }" do %>
-<div class="media room-item" data-room-id="<%= room.id %>">
-  <div class="media-left">
+<% if can? :update, room %>
+  <div id="dropdown-<%= room.id %>" class="dropdown">
+    <ul class="dropdown-menu dropdown-menu-right">
+      <% if can? :destroy, room %>
+        <li>
+          <%= link_to 'Delete', room_path(room), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </li>
+      <% end %>
+      <li>
+        <% unless room.locked %>
+          <%= link_to 'Lock now', lock_room_path(room), method: :put %>
+        <% end %>
+        <% if room.locked %>
+          <%= link_to 'Unlock', unlock_room_path(room), method: :put %>
+        <% end %>
+      </li>
+      <% unless room.locked %>
+        <li><hr></li>
+        <li>
+          <% if room.planned_lock %>
+            Will lock on <%= room.planned_lock.to_formatted_s(:long_ordinal) %>
+            <%= form_for room, url: cancel_delayed_lock_room_path(room), method: :put do |f| %>
+              <%= f.submit 'Cancel', class: 'btn btn-success' %>
+            <% end %>
+          <% else %>
+            <%= form_for room, url: set_delayed_lock_room_path(room), method: :post do |f| %>
+              Lock in:
+              <input type="text" name="days" placeholder="0"> days
+              <input type="text" name="hours" placeholder="0"> hours
+              <input type="text" name="minutes" placeholder="0"> minutes
+              <br>
+              <%= f.submit 'Set delayed lock', class: 'btn btn-success' %>
+            <% end %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
   </div>
-  <div class="media-body">
-    <h4 class="media-heading"><%= room.title %></h4>
-    <span class="room-item-replies"><%= room.messages.count %> <%= 'reply'.pluralize(room.messages.count) %></span>
-    <% if room_unread_messages(room) > 0 %>
-      | <span class="badge"><%= room_unread_messages(room) %></span> unread
-    <% end %>
-    <% if room.messages.first %>
-      | updated <%= time_ago_in_words(room.messages.first.created_at) %> ago
+<% end %>
+
+<%= link_to room_path(room, access_token: params[:access_token].present? ? params[:access_token]:nil), class: "room-item list-group-item #{ 'active' if room.id == (params[:id].to_i) && params[:controller] == 'rooms' }" do %>
+  <div class="media" data-room-id="<%= room.id %>">
+    <div class="media-body">
+      <h4 class="media-heading"><%= room.title %></h4>
+      <span class="room-item-replies"><%= room.messages.size %> <%= 'reply'.pluralize(room.messages.size) %></span>
+      <% if room_unread_messages(room) > 0 %>
+        | <span class="badge"><%= room_unread_messages(room) %></span> unread
+      <% end %>
+      <%= last_update_info(room) %>
+      <% if room.locked %>
+        | Locked <%= fa_icon 'lock' %>
+      <% end %>
+    </div>
+    <% if can? :update, room %>
+      <div class="media-right">
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" data-target="#dropdown-<%= room.id %>">
+          <%= fa_icon 'bars' %>
+        </button>
+      </div>
     <% end %>
   </div>
-</div>
 <% end %>

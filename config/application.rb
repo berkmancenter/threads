@@ -12,7 +12,7 @@ module Threads
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
-    config.time_zone = 'Hanoi'
+    config.time_zone = 'Eastern Time (US & Canada)'
     config.active_record.default_timezone = :utc
 
     config.autoload_paths += %W(#{config.root}/lib)
@@ -25,11 +25,15 @@ module Threads
                                routing_specs: false,
                                intergration_pool: false,
                                fixture: true
+    end
 
+    if ENV['LOG_TO_STDOUT'].present?
       logger           = ActiveSupport::Logger.new(STDOUT)
       logger.formatter = config.log_formatter
       config.log_tags  = [:subdomain, :uuid]
       config.logger    = ActiveSupport::TaggedLogging.new(logger)
     end
+
+    config.active_job.queue_adapter = :sidekiq
   end
 end

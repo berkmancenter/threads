@@ -21,16 +21,26 @@ Rails.application.routes.draw do
     collection do
       get :simple
     end
+    member do
+      post :set_delayed_lock
+      post :mute_user
+      post :unmute_user
+      put :lock
+      put :unlock
+      put :cancel_delayed_lock
+      get :messages
+    end
   end
 
   resources :instances do
     member do
       get :new_room, to: 'rooms#new'
-      get :close
-      get :open
-      get :private
-      get :unprivate
       post :set_moderators
+      put :close
+      put :open
+      put :private
+      put :unprivate
+      get :export
     end
   end
 
