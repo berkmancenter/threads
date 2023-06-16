@@ -49,6 +49,17 @@
       visibility: hidden;
     }
 
+    .message-item {
+      padding: 5px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      background-color: #fff;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
     &.message-area-editor {
       .dropdown-menu {
         visibility: visible;
@@ -76,5 +87,38 @@
     @media (min-width: 768px) {
         flex-grow: 1;
     }
+  }
+}
+
+.message-form {
+  display: flex;
+  align-items: center;
+
+  form {
+    flex-grow: 1;
+  }
+
+  .form-group {
+    margin-bottom: 0;
+  }
+
+  .message-form-send-button {
+    height: 100%;
+    padding: 4px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    display: flex;
+    user-select: none;
+
+    &:hover {
+      border: 1px solid #000;
+    }
+  }
+}
+
+.message-form-settings {
+  label {
+    font-weight: normal;
   }
 }

@@ -1,7 +1,7 @@
 <div class="message-item message-item-extra<% if message.user.muted_in_room?(room) %> message-item-muted<% end %>" data-message-id="<%= message.id %>" data-user-id="<%= message.user.id %>">
   <span class="dropdown">
     <strong class="message-user dropdown-toggle" data-toggle="dropdown">
-      <%= message.user.nickname_in_room(room) %>:
+      <%= message.user.nickname_in_room(room) %>
     </strong>
     <ul class="dropdown-menu">
       <li>
@@ -19,5 +19,5 @@
       </li>
     </ul>
   </span>
-  <span class="message-content"><%= message.content %></span>
+  <div class="message-content"><%= sanitize(simple_format(message.content), tags: ['br']) %></div>
 </div>

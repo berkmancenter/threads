@@ -11,13 +11,15 @@
   $(function () {
     scrollToBottom($messageArea);
     onEnterMessageform();
+    handleMessageSubmitButton();
     handleMessageAreaExpanding();
   });
 
   function onEnterMessageform () {
     $messageForm.on('keydown', function (e) {
       if (!this.value || !this.value.trim()) return;
-      if (e.keyCode == 13 && !e.shiftKey) {
+
+      if (e.keyCode == 13 && !e.shiftKey && $('#message-form-enter-submit').is(':checked')) {
         e.preventDefault();
         $('form#new_message').submit();
         $messageForm.val('');
@@ -81,5 +83,22 @@
     } else {
       titleBox.removeClass('room-chat-header-title-long');
     }
+  }
+
+  function handleMessageSubmitButton () {
+    if (window.localStorage.getItem('threads.send_message_on_return') === 'true') {
+      $('.message-form-enter-submit').attr('checked', 'checked');
+    }
+
+    $('.message-form-send-button').on('click', function () {
+      $('form#new_message').submit();
+      $messageForm.val('');
+    });
+
+    $('.message-form-enter-submit').on('change', function () {
+      var el = $(this);
+
+      window.localStorage.setItem('threads.send_message_on_return', el.is(':checked'));
+    });
   }
 })();
