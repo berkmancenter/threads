@@ -58,6 +58,12 @@
       &:last-child {
         margin-bottom: 0;
       }
+
+      .message-content {
+        p:last-child {
+          margin-bottom: 0;
+        }
+      }
     }
 
     &.message-area-editor {
